@@ -21,46 +21,38 @@ export type ThemedTextProps = TextProps & {
     | "bold";
 };
 
-export const ThemedText = forwardRef<Text, ThemedTextProps>(
-  (
-    {
-      style,
-      lightColor,
-      darkColor,
-      type = "default",
-      ...rest
-    }: ThemedTextProps,
-    ref
-  ) => {
-    const color = useThemeColor("text", {
-      light: lightColor,
-      dark: darkColor,
-    });
+export const ThemedText = forwardRef<Text, ThemedTextProps>(function ThemedText(
+  { style, lightColor, darkColor, type = "default", ...rest }: ThemedTextProps,
+  ref
+) {
+  const color = useThemeColor("text", {
+    light: lightColor,
+    dark: darkColor,
+  });
 
-    return (
-      <Text
-        ref={ref}
-        style={[
-          { color },
-          type === "default" ? styles.default : undefined,
-          type === "title" ? styles.title : undefined,
-          type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
-          type === "subtitle" ? styles.subtitle : undefined,
-          type === "link" ? styles.link : undefined,
-          type === "tag" ? styles.tag : undefined,
-          type === "mediumTitle" ? styles.mediumTitle : undefined,
-          type === "medium" ? styles.medium : undefined,
-          type == "emphasis" ? styles.emphasis : undefined,
-          type == "defaultLight" ? styles.defaultLight : undefined,
-          type === "small" ? styles.small : undefined,
-          type === "bold" ? styles.bold : undefined,
-          style,
-        ]}
-        {...rest}
-      />
-    );
-  }
-);
+  return (
+    <Text
+      ref={ref}
+      style={[
+        { color },
+        type === "default" ? styles.default : undefined,
+        type === "title" ? styles.title : undefined,
+        type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
+        type === "subtitle" ? styles.subtitle : undefined,
+        type === "link" ? styles.link : undefined,
+        type === "tag" ? styles.tag : undefined,
+        type === "mediumTitle" ? styles.mediumTitle : undefined,
+        type === "medium" ? styles.medium : undefined,
+        type === "emphasis" ? styles.emphasis : undefined,
+        type === "defaultLight" ? styles.defaultLight : undefined,
+        type === "small" ? styles.small : undefined,
+        type === "bold" ? styles.bold : undefined,
+        style,
+      ]}
+      {...rest}
+    />
+  );
+});
 
 const styles = StyleSheet.create({
   default: {

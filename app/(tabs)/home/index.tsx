@@ -1,11 +1,13 @@
+import { getGuessLikeComic, getIndexData } from "@/axios/comic";
+import { Comic, IndexComicData } from "@/common/interface";
+import { Section } from "@/components/home/HomeSection";
+import { Loading } from "@/components/Loading";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { Link, Stack } from "expo-router";
-import { useState } from "react";
+import { router, Stack } from "expo-router";
+import { useEffect, useState } from "react";
 import {
-  Text,
-  View,
   StyleSheet,
   ScrollView,
   NativeSyntheticEvent,
@@ -13,14 +15,12 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function Home() {
+export default function HomeScreen() {
   const [showHeader, setShowHeader] = useState(false);
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
   const yOffset = 24;
   const scrollThreshold = headerHeight - insets.top - yOffset;
-
-  const textColor = useThemeColor("text");
 
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (e.nativeEvent.contentOffset.y < scrollThreshold && showHeader) {
@@ -33,6 +33,34 @@ export default function Home() {
     }
   };
 
+  const textColor = useThemeColor("text");
+
+  const [comics, setComics] = useState<IndexComicData>({
+    new: [],
+    update: [],
+    mostView: [],
+    mostFollow: [],
+    mostViewOver: [],
+    recommend: [],
+    mostSearch: [],
+  });
+  const [guess, setGuess] = useState<Comic[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const guessLike = () => {
+    getGuessLikeComic().then((res) => {
+      setGuess(res);
+    });
+  };
+
+  useEffect(() => {
+    Promise.all([getIndexData(), getGuessLikeComic()]).then(([res1, res2]) => {
+      setComics(res1);
+      setGuess(res2);
+      setLoading(false);
+    });
+  }, []);
+
   return (
     <>
       <Stack.Screen
@@ -44,24 +72,57 @@ export default function Home() {
           headerTintColor: textColor,
         }}
       />
-
-      <ScrollView
-        onScroll={onScroll}
-        style={[styles.scrollContainer, { marginTop: headerHeight }]}
-      >
-        <ThemedText
-          type="title"
-          style={[styles.title, { marginTop: -yOffset }]}
+      {loading ? (
+        <Loading />
+      ) : (
+        <ScrollView
+          onScroll={onScroll}
+          style={[styles.scrollContainer, { marginTop: headerHeight }]}
+          contentContainerStyle={styles.contentContainer}
         >
-          主页
-        </ThemedText>
-        <View style={[styles.container, { backgroundColor: "green" }]}>
-          <Link href="/home/most-follow">Go to Most Follow</Link>
-        </View>
-        <View style={[styles.container, { backgroundColor: "blue" }]}>
-          <Link href="/home/most-view">Go to Most Follow</Link>
-        </View>
-      </ScrollView>
+          <ThemedText
+            type="title"
+            style={{ marginTop: -yOffset, marginBottom: 12 }}
+          >
+            主页
+          </ThemedText>
+          <Section
+            title="新作"
+            comics={comics.new}
+            headerAction={() => router.navigate("./home/new")}
+          />
+          <Section
+            title="更新"
+            comics={comics.update}
+            headerAction={() => router.push("./home/update")}
+          />
+          <Section
+            title="最多阅读"
+            comics={comics.mostView}
+            headerAction={() => router.push("./home/most-view")}
+          />
+          <Section
+            title="最多收藏"
+            comics={comics.mostFollow}
+            headerAction={() => router.push("./home/most-follow")}
+          />
+          <Section
+            title="最多阅读（完结）"
+            comics={comics.mostViewOver}
+            headerAction={() => router.push("./home/most-view-over")}
+          />
+          <Section title="推荐" comics={comics.recommend} />
+
+          <Section title="最多搜索" comics={comics.mostSearch} />
+
+          <Section
+            title="猜你喜欢"
+            comics={guess}
+            icon="arrow.trianglehead.2.clockwise"
+            headerAction={guessLike}
+          />
+        </ScrollView>
+      )}
     </>
   );
 }
@@ -69,16 +130,10 @@ export default function Home() {
 const styles = StyleSheet.create({
   scrollContainer: {
     overflow: "visible",
+  },
+  contentContainer: {
+    gap: 20,
+    paddingBottom: 100,
     paddingHorizontal: 20,
-  },
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    marginTop: 20,
-    height: 1000,
-  },
-  title: {
-    // marginTop: -28,
   },
 });
