@@ -49,7 +49,8 @@ export function IconSymbol({
   weight?: SymbolWeight;
   type?: SymbolType;
 }) {
-  const c = color ?? useThemeColor("icon");
+  const defaultIconColor = useThemeColor("icon");
+  const c = color ?? defaultIconColor;
   return (
     <MaterialIcons color={c} size={size} name={MAPPING[name]} style={style} />
   );
