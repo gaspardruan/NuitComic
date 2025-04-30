@@ -34,6 +34,7 @@ export default function HomeScreen() {
   };
 
   const textColor = useThemeColor("text");
+  const backgroundColor = useThemeColor("background");
 
   const [comics, setComics] = useState<IndexComicData>({
     new: [],
@@ -77,7 +78,10 @@ export default function HomeScreen() {
       ) : (
         <ScrollView
           onScroll={onScroll}
-          style={[styles.scrollContainer, { marginTop: headerHeight }]}
+          style={[
+            styles.scrollContainer,
+            { marginTop: headerHeight, backgroundColor },
+          ]}
           contentContainerStyle={styles.contentContainer}
         >
           <ThemedText type="title" style={{ marginTop: -yOffset }}>

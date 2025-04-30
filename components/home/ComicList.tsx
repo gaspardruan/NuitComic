@@ -5,7 +5,7 @@ import { useHeaderHeight } from "@react-navigation/elements";
 
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Comic } from "@/common/interface";
-import { tintColorLight } from "@/common/color";
+import { tintColorLight } from "@/common/theme";
 
 import { ComicRow } from "./ComicRow";
 
