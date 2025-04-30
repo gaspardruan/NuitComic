@@ -208,11 +208,11 @@ const refineComic = (comics: any) => {
       comic.cover = `${imageBaseUrl}${comic.cover}`;
       comic.updateTime = comic.update_time;
       comic.isOver = comic.mhstatus;
-      delete comic.auther;
-      delete comic.pingfen;
-      delete comic.mark;
-      delete comic.update_time;
-      delete comic.mhstatus;
+      // delete comic.auther;
+      // delete comic.pingfen;
+      // delete comic.mark;
+      // delete comic.update_time;
+      // delete comic.mhstatus;
     });
   } else {
     for (const key in comics) {
@@ -227,8 +227,8 @@ const refineChapter = (chapters: any) => {
       chapter.title = (chapter.title as string).trim();
       chapter.createTime = formatTimeToDate(chapter.create_time as string);
       chapter.imageList = (chapter.imagelist as string).split(",");
-      delete chapter.create_time;
-      delete chapter.imagelist;
+      // delete chapter.create_time;
+      // delete chapter.imagelist;
     });
   }
 };
