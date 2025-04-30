@@ -1,18 +1,10 @@
-import { Text, View, StyleSheet } from "react-native";
+import { getUpdatedComicByPage } from "@/axios/comic";
 
-export default function Home() {
-  return (
-    <View style={styles.container}>
-      <Text>Update</Text>
-    </View>
-  );
+import { ComicList } from "@/components/home/ComicList";
+import { useComicByPage } from "@/hooks/useComicByPage";
+
+export default function UpdateScreen() {
+  const [comics, loadNextPage] = useComicByPage(getUpdatedComicByPage);
+
+  return <ComicList title="更新" comics={comics} loadNextPage={loadNextPage} />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-});

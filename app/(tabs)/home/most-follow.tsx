@@ -1,18 +1,12 @@
-import { Text, View, StyleSheet } from "react-native";
+import { getMostFollowComicByPage } from "@/axios/comic";
 
-export default function Home() {
+import { ComicList } from "@/components/home/ComicList";
+import { useComicByPage } from "@/hooks/useComicByPage";
+
+export default function MostFollowScreen() {
+  const [comics, loadNextPage] = useComicByPage(getMostFollowComicByPage);
+
   return (
-    <View style={styles.container}>
-      <Text>Most Follow</Text>
-    </View>
+    <ComicList title="最多收藏" comics={comics} loadNextPage={loadNextPage} />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-});

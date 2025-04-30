@@ -1,18 +1,16 @@
-import { Text, View, StyleSheet } from "react-native";
+import { getMostViewOverComicByPage } from "@/axios/comic";
 
-export default function Home() {
+import { ComicList } from "@/components/home/ComicList";
+import { useComicByPage } from "@/hooks/useComicByPage";
+
+export default function MostViewOverScreen() {
+  const [comics, loadNextPage] = useComicByPage(getMostViewOverComicByPage);
+
   return (
-    <View style={styles.container}>
-      <Text>Most View Over</Text>
-    </View>
+    <ComicList
+      title="最多阅读（完结）"
+      comics={comics}
+      loadNextPage={loadNextPage}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-});
