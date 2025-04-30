@@ -38,14 +38,6 @@ const _get = async (url: string): Promise<[Comic[], boolean]> => {
 export const getBannerComic = async () =>
   await _post("/getbanner.html", { type: 1, limit: 5 });
 
-export const getNewComic = async () =>
-  await _post("/getbook.html", {
-    type: 1,
-    limit: 6,
-    start: 0,
-    order: "id desc",
-  });
-
 export const getUpdatedComic = async () =>
   await _post("/getbook.html", {
     type: 1,
@@ -100,6 +92,14 @@ export const getMostViewOverComicByPage = async (
   return [await getMostViewOverComic(start, pageSize), false];
 };
 
+export const getNewComic = async (start = 0, limit = 6) =>
+  await _post("/getbook.html", {
+    type: 1,
+    limit: limit,
+    start: start,
+    order: "id desc",
+  });
+
 export const getRandomComic = async () =>
   await _post("/getbook.html", { type: 1, limit: 6, fz: 2 });
 
@@ -107,10 +107,15 @@ export const getGuessLikeComic = async () =>
   await _post("/getcnxh.html", { type: 1, limit: 6 });
 
 export const getUpdatedComicByPage = async (page = 1) =>
-  await _get(`/getpage/tp/1-isnew-${page}`);
+  await _get(`/cate/tp/1-0-0-1-${page}`);
 
-export const getNewComicByPage = async (page = 1) =>
-  await _get(`/getpage/tp/1-competitive-${page}`);
+export const getRecommendComicByPage = async (page = 1) =>
+  await _get(`/getpage/tp/1-recommend-${page}`);
+
+export const getNewComicByPage = async (page = 1) => {
+  const start = (page - 1) * pageSize;
+  return [await getNewComic(start, pageSize), false];
+};
 
 export const getMostSerchComic = async (): Promise<Comic[]> => {
   const res = await axios.get("/rank/type/1");

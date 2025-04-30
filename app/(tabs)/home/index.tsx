@@ -112,7 +112,11 @@ export default function HomeScreen() {
             comics={comics.mostViewOver}
             headerAction={() => router.push("./home/most-view-over")}
           />
-          <Section title="推荐" comics={comics.recommend} />
+          <Section
+            title="推荐"
+            comics={comics.recommend}
+            headerAction={() => router.push("./home/recommend")}
+          />
 
           <Section title="最多搜索" comics={comics.mostSearch} />
 
