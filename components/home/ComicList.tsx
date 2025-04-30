@@ -22,7 +22,7 @@ export function ComicList({ title, comics, loadNextPage }: ComicListProps) {
   const [blur, setBlur] = useState(false);
   const headerHeight = useHeaderHeight();
 
-  const showHeaderThreshold = 4;
+  const gap = 16;
 
   const renderRow = ({ item }: { item: Comic }) => {
     return <ComicRow comic={item} />;
@@ -48,18 +48,15 @@ export function ComicList({ title, comics, loadNextPage }: ComicListProps) {
         style={[
           styles.container,
           {
-            paddingTop: headerHeight,
+            paddingTop: headerHeight + gap,
             backgroundColor: backgroundColor,
           },
         ]}
-        contentContainerStyle={{ gap: 16 }}
+        contentContainerStyle={{ gap }}
         onScroll={(e) => {
-          if (e.nativeEvent.contentOffset.y < showHeaderThreshold && blur) {
+          if (e.nativeEvent.contentOffset.y < gap && blur) {
             setBlur(false);
-          } else if (
-            e.nativeEvent.contentOffset.y >= showHeaderThreshold &&
-            !blur
-          ) {
+          } else if (e.nativeEvent.contentOffset.y >= gap && !blur) {
             setBlur(true);
           }
         }}
