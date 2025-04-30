@@ -6,7 +6,6 @@ const imageBaseUrl = "https://ii.juhiepay.com/public";
 const pageSize = 20;
 
 axios.defaults.baseURL = "https://yymh.app/home/api";
-axios.defaults.headers.common["Referer"] = "https://yymh.app/";
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 axios.defaults.timeout = 5000;
