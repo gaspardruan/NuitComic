@@ -80,10 +80,7 @@ export default function HomeScreen() {
           style={[styles.scrollContainer, { marginTop: headerHeight }]}
           contentContainerStyle={styles.contentContainer}
         >
-          <ThemedText
-            type="title"
-            style={{ marginTop: -yOffset, marginBottom: 12 }}
-          >
+          <ThemedText type="title" style={{ marginTop: -yOffset }}>
             主页
           </ThemedText>
           <Section
@@ -132,7 +129,7 @@ const styles = StyleSheet.create({
     overflow: "visible",
   },
   contentContainer: {
-    gap: 20,
+    gap: 32,
     paddingBottom: 100,
     paddingHorizontal: 20,
   },

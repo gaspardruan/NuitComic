@@ -26,6 +26,7 @@ export function Section({
   style,
   headerAction,
 }: HomeSectionProps) {
+  const space = 12;
   return (
     <View style={[styles.sectionContainer, style]}>
       {headerAction ? (
@@ -43,9 +44,8 @@ export function Section({
       <SimpleGrid
         listKey="new"
         data={comics}
-        spacing={12}
-        additionalRowStyle={{ marginBottom: 0 }}
-        style={{ marginHorizontal: -12 }}
+        spacing={space}
+        style={{ marginHorizontal: -space, marginVertical: -space }}
         itemDimension={0}
         maxItemsPerRow={3}
         renderItem={({ item }) => {
@@ -58,7 +58,7 @@ export function Section({
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    gap: 4,
+    gap: 16,
   },
   sectionTitleContainer: {
     flexDirection: "row",
