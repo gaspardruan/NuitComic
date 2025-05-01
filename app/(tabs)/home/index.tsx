@@ -3,38 +3,22 @@ import { Comic, IndexComicData } from "@/common/interface";
 import { Section } from "@/components/home/HomeSection";
 import { Loading } from "@/components/Loading";
 import { ThemedText } from "@/components/ThemedText";
+import { useScrollOffset } from "@/hooks/useScrollOffset";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
-} from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
-  const [showHeader, setShowHeader] = useState(false);
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
   const yOffset = 24;
   const scrollThreshold = headerHeight - insets.top - yOffset;
-
-  const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (e.nativeEvent.contentOffset.y < scrollThreshold && showHeader) {
-      setShowHeader(false);
-    } else if (
-      e.nativeEvent.contentOffset.y >= scrollThreshold &&
-      !showHeader
-    ) {
-      setShowHeader(true);
-    }
-  };
+  const [showHeader, onScroll] = useScrollOffset(scrollThreshold);
 
   const textColor = useThemeColor("text");
-  const backgroundColor = useThemeColor("background");
 
   const [comics, setComics] = useState<IndexComicData>({
     new: [],
@@ -78,10 +62,7 @@ export default function HomeScreen() {
       ) : (
         <ScrollView
           onScroll={onScroll}
-          style={[
-            styles.scrollContainer,
-            { marginTop: headerHeight, backgroundColor },
-          ]}
+          style={[styles.scrollContainer, { marginTop: headerHeight }]}
           contentContainerStyle={styles.contentContainer}
         >
           <ThemedText type="title" style={{ marginTop: -yOffset }}>
