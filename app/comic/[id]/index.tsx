@@ -21,6 +21,9 @@ import GuessLike from "@/components/GuessLike";
 import { IconSymbol } from "@/components/icon/IconSymbol";
 import ThemedText from "@/components/ThemedText";
 import { useScrollOffset } from "@/hooks/useScrollOffset";
+import { ComicChapter } from "@/common/interface";
+import { getComicAllChapter } from "@/axios/comic";
+import { ContentModal } from "@/components/comic/content/ContentModal";
 
 const topGap = 4;
 const sectionGap = 20;
@@ -58,6 +61,9 @@ export default function ComicDetail() {
   const [showHeader, onScrollForHeader] = useScrollOffset(topGap);
   const [showTitle, onScrollForTitle] = useScrollOffset(textY - headerHeight);
 
+  const [isContentVisible, setIsContentVisible] = useState(false);
+  const [chapters, setChapters] = useState<ComicChapter[]>([]);
+
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     onScrollForHeader(e);
     onScrollForTitle(e);
@@ -72,8 +78,17 @@ export default function ComicDetail() {
   };
 
   const onContentClick = useCallback(() => {
-    console.log("onContentClick");
-  }, []);
+    if (chapters.length === 0) {
+      getComicAllChapter(id).then((res) => {
+        setChapters(res);
+      });
+    }
+    setIsContentVisible(true);
+  }, [chapters.length, id]);
+
+  const onContentClose = () => {
+    setIsContentVisible(false);
+  };
 
   return (
     <>
@@ -133,6 +148,13 @@ export default function ComicDetail() {
         {/* More */}
         <GuessLike style={styles.guessLike} useSecondaryBackground />
       </ScrollView>
+
+      {/* Content Modal */}
+      <ContentModal
+        isVisible={isContentVisible}
+        onClose={onContentClose}
+        chapters={chapters}
+      />
     </>
   );
 }
