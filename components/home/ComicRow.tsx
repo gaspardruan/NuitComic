@@ -1,5 +1,5 @@
 import { Comic } from "@/common/interface";
-import { ThemedText } from "../ThemedText";
+import ThemedText from "../ThemedText";
 import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { formatSliceKeyword } from "@/common/util";

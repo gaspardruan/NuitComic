@@ -8,7 +8,7 @@ export const formatKeyword = (keyword: string): string[] => {
   return keyword.split(",").map((k) => k.trim());
 };
 
-export const formatNumber = (num: string): string => {
+export const formatNumber = (num: string | number): string => {
   const n = Number(num);
   if (n > 10000) {
     // 1.2万

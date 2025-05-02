@@ -1,8 +1,9 @@
-import { getGuessLikeComic, getIndexData } from "@/axios/comic";
-import { Comic, IndexComicData } from "@/common/interface";
-import { Section } from "@/components/home/HomeSection";
+import { getIndexData } from "@/axios/comic";
+import { IndexComicData } from "@/common/interface";
+import GuessLike from "@/components/GuessLike";
+import { Section } from "@/components/ComicSection";
 import { Loading } from "@/components/Loading";
-import { ThemedText } from "@/components/ThemedText";
+import ThemedText from "@/components/ThemedText";
 import { useScrollOffset } from "@/hooks/useScrollOffset";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -29,19 +30,11 @@ export default function HomeScreen() {
     recommend: [],
     mostSearch: [],
   });
-  const [guess, setGuess] = useState<Comic[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const guessLike = () => {
-    getGuessLikeComic().then((res) => {
-      setGuess(res);
-    });
-  };
-
   useEffect(() => {
-    Promise.all([getIndexData(), getGuessLikeComic()]).then(([res1, res2]) => {
-      setComics(res1);
-      setGuess(res2);
+    getIndexData().then((res) => {
+      setComics(res);
       setLoading(false);
     });
   }, []);
@@ -101,12 +94,7 @@ export default function HomeScreen() {
 
           <Section title="最多搜索" comics={comics.mostSearch} />
 
-          <Section
-            title="猜你喜欢"
-            comics={guess}
-            icon="arrow.trianglehead.2.clockwise"
-            headerAction={guessLike}
-          />
+          <GuessLike />
         </ScrollView>
       )}
     </>

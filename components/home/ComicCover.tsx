@@ -2,8 +2,9 @@ import { Comic } from "@/common/interface";
 import { Link } from "expo-router";
 import { View } from "react-native";
 import { Image } from "expo-image";
-import { ThemedText } from "../ThemedText";
+import ThemedText from "../ThemedText";
 import { formatSliceKeyword } from "@/common/util";
+import { Loading } from "../Loading";
 
 type ComicCoverProps = {
   comic: Comic;
