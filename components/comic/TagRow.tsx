@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import ThemedText from "../ThemedText";
 import { formatKeyword } from "@/common/util";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -16,7 +16,7 @@ const TagRow = ({ author, tags }: TagRowProps) => {
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{ gap: 8, alignItems: "center" }}
+      contentContainerStyle={styles.container}
     >
       <ThemedText type="tag">作者：{author}</ThemedText>
       <ThemedText type="tag">|</ThemedText>
@@ -24,12 +24,7 @@ const TagRow = ({ author, tags }: TagRowProps) => {
         <ThemedText
           key={index}
           type="tag"
-          style={{
-            backgroundColor: tagBackground,
-            paddingVertical: 2,
-            paddingHorizontal: 10,
-            borderRadius: 12,
-          }}
+          style={[styles.tag, { backgroundColor: tagBackground }]}
         >
           {item}
         </ThemedText>
@@ -37,5 +32,17 @@ const TagRow = ({ author, tags }: TagRowProps) => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 8,
+    alignItems: "center",
+  },
+  tag: {
+    paddingVertical: 2,
+    paddingHorizontal: 10,
+    borderRadius: 12,
+  },
+});
 
 export default memo(TagRow);

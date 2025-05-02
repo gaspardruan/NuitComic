@@ -1,10 +1,9 @@
 import { Comic } from "@/common/interface";
 import { Link } from "expo-router";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import ThemedText from "../ThemedText";
 import { formatSliceKeyword } from "@/common/util";
-import { Loading } from "../Loading";
 
 type ComicCoverProps = {
   comic: Comic;
@@ -36,7 +35,7 @@ export function ComicCover({ comic }: ComicCoverProps) {
             uri: comic.image,
             headers: { Referer: "https://yymh.app/" },
           }}
-          style={{ width: "100%", aspectRatio: 0.75, borderRadius: 6 }}
+          style={styles.container}
         />
         <View>
           <ThemedText type="default" numberOfLines={1} ellipsizeMode="tail">
@@ -50,3 +49,11 @@ export function ComicCover({ comic }: ComicCoverProps) {
     </Link>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    aspectRatio: 0.75,
+    borderRadius: 6,
+  },
+});

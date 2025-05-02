@@ -12,10 +12,12 @@ import { useEffect, useState } from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+const yOffset = 24;
+
 export default function HomeScreen() {
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
-  const yOffset = 24;
+
   const scrollThreshold = headerHeight - insets.top - yOffset;
   const [showHeader, onScroll] = useScrollOffset(scrollThreshold);
 
@@ -58,7 +60,7 @@ export default function HomeScreen() {
           style={[styles.scrollContainer, { marginTop: headerHeight }]}
           contentContainerStyle={styles.contentContainer}
         >
-          <ThemedText type="title" style={{ marginTop: -yOffset }}>
+          <ThemedText type="title" style={styles.title}>
             主页
           </ThemedText>
           <Section
@@ -109,5 +111,8 @@ const styles = StyleSheet.create({
     gap: 32,
     paddingBottom: 100,
     paddingHorizontal: 20,
+  },
+  title: {
+    marginTop: -yOffset,
   },
 });

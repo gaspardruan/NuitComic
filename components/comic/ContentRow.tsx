@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import ThemedText from "../ThemedText";
 import { memo, useEffect, useState } from "react";
 import { getComicChapterNum } from "@/axios/comic";
@@ -15,8 +15,6 @@ type ContentRowProps = {
 const ContentRow = ({ id, updateTime, isOver, onClick }: ContentRowProps) => {
   const [chapterNum, setChapterNum] = useState(0);
 
-  console.log("ContentRow rendered");
-
   useEffect(() => {
     getComicChapterNum(id).then((res) => {
       setChapterNum(res);
@@ -26,11 +24,11 @@ const ContentRow = ({ id, updateTime, isOver, onClick }: ContentRowProps) => {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      style={{ justifyContent: "space-between", flexDirection: "row" }}
+      style={styles.container}
       onPress={onClick}
     >
       <ThemedText type="subtitle">目录</ThemedText>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View style={styles.row}>
         <ThemedText type="default">
           {isOver === "0"
             ? `连载至${chapterNum}章·${formatTime(updateTime)}`
@@ -41,5 +39,16 @@ const ContentRow = ({ id, updateTime, isOver, onClick }: ContentRowProps) => {
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});
 
 export default memo(ContentRow);

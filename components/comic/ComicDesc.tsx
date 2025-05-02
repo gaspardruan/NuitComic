@@ -1,5 +1,11 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { StyleProp, TouchableOpacity, View, ViewStyle } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
 import ReadMore from "react-native-read-more-text";
 import { IconSymbol } from "../icon/IconSymbol";
 import ThemedText from "../ThemedText";
@@ -19,40 +25,15 @@ const ComicDesc = ({ desc, style }: ComicDescProps) => {
         numberOfLines={4}
         renderTruncatedFooter={(onPress) => (
           <TouchableOpacity onPress={onPress}>
-            <View
-              style={{
-                marginTop: -20,
-                right: -8,
-                backgroundColor: tagBackground,
-                alignSelf: "flex-end",
-                width: 24,
-                alignItems: "center",
-                borderRadius: 6,
-              }}
-            >
-              <IconSymbol
-                name="chevron.down"
-                size={12}
-                color={icon}
-                style={{}}
-              />
+            <View style={[styles.icon, { backgroundColor: tagBackground }]}>
+              <IconSymbol name="chevron.down" size={12} color={icon} />
             </View>
           </TouchableOpacity>
         )}
         renderRevealedFooter={(onPress) => (
           <TouchableOpacity onPress={onPress}>
-            <View
-              style={{
-                marginTop: -18,
-                right: -8,
-                backgroundColor: tagBackground,
-                alignSelf: "flex-end",
-                width: 24,
-                alignItems: "center",
-                borderRadius: 6,
-              }}
-            >
-              <IconSymbol name="chevron.up" size={12} color={icon} style={{}} />
+            <View style={[styles.icon, { backgroundColor: tagBackground }]}>
+              <IconSymbol name="chevron.up" size={12} color={icon} />
             </View>
           </TouchableOpacity>
         )}
@@ -62,5 +43,16 @@ const ComicDesc = ({ desc, style }: ComicDescProps) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  icon: {
+    marginTop: -20,
+    right: -8,
+    alignSelf: "flex-end",
+    width: 24,
+    alignItems: "center",
+    borderRadius: 6,
+  },
+});
 
 export default memo(ComicDesc);

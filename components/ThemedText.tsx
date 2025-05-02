@@ -33,8 +33,6 @@ const ThemedText = ({
     dark: darkColor,
   });
 
-  console.log("ThemedText rendered with type:", type);
-
   return (
     <Text
       style={[

@@ -1,0 +1,61 @@
+"filename", "language", "JSON with Comments", "JavaScript", "JSON", "TypeScript", "Markdown", "TypeScript JSX", "Ruby", "C++", "Swift", "Objective-C++", "XML", "Objective-C", "Environment Variables", "comment", "blank", "total"
+"/Users/zq/coding/ReactNative/NuitComic/.eslintrc.js", "JavaScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 6
+"/Users/zq/coding/ReactNative/NuitComic/README.md", "Markdown", 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/zq/coding/ReactNative/NuitComic/app.json", "JSON with Comments", 42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 43
+"/Users/zq/coding/ReactNative/NuitComic/app/(tabs)/_layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 3, 44
+"/Users/zq/coding/ReactNative/NuitComic/app/(tabs)/home/_layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 2, 6
+"/Users/zq/coding/ReactNative/NuitComic/app/(tabs)/home/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 105, 0, 0, 0, 0, 0, 0, 0, 0, 9, 114
+"/Users/zq/coding/ReactNative/NuitComic/app/(tabs)/home/most-follow.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 4, 13
+"/Users/zq/coding/ReactNative/NuitComic/app/(tabs)/home/most-view-over.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 4, 17
+"/Users/zq/coding/ReactNative/NuitComic/app/(tabs)/home/most-view.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 4, 13
+"/Users/zq/coding/ReactNative/NuitComic/app/(tabs)/home/new.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 4, 11
+"/Users/zq/coding/ReactNative/NuitComic/app/(tabs)/home/recommend.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 4, 11
+"/Users/zq/coding/ReactNative/NuitComic/app/(tabs)/home/update.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 4, 11
+"/Users/zq/coding/ReactNative/NuitComic/app/(tabs)/shelf/_layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 2, 6
+"/Users/zq/coding/ReactNative/NuitComic/app/(tabs)/shelf/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 3, 19
+"/Users/zq/coding/ReactNative/NuitComic/app/+not-found.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 3, 27
+"/Users/zq/coding/ReactNative/NuitComic/app/_layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 3, 21
+"/Users/zq/coding/ReactNative/NuitComic/app/comic/[id]/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 131, 0, 0, 0, 0, 0, 0, 0, 6, 14, 151
+"/Users/zq/coding/ReactNative/NuitComic/app/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 2, 8
+"/Users/zq/coding/ReactNative/NuitComic/axios/comic.ts", "TypeScript", 0, 0, 0, 205, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 29, 243
+"/Users/zq/coding/ReactNative/NuitComic/common/interface.ts", "TypeScript", 0, 0, 0, 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 32
+"/Users/zq/coding/ReactNative/NuitComic/common/theme.ts", "TypeScript", 0, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 53
+"/Users/zq/coding/ReactNative/NuitComic/common/util.ts", "TypeScript", 0, 0, 0, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 5, 38
+"/Users/zq/coding/ReactNative/NuitComic/components/ComicSection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 68, 0, 0, 0, 0, 0, 0, 0, 0, 5, 73
+"/Users/zq/coding/ReactNative/NuitComic/components/GuessLike.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 0, 0, 7, 43
+"/Users/zq/coding/ReactNative/NuitComic/components/HapticTab.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 1, 2, 19
+"/Users/zq/coding/ReactNative/NuitComic/components/Loading.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 3, 21
+"/Users/zq/coding/ReactNative/NuitComic/components/ThemedText.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 114, 0, 0, 0, 0, 0, 0, 0, 0, 8, 122
+"/Users/zq/coding/ReactNative/NuitComic/components/comic/AutoSizedImage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 55, 0, 0, 0, 0, 0, 0, 0, 0, 9, 64
+"/Users/zq/coding/ReactNative/NuitComic/components/comic/ComicDesc.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 4, 67
+"/Users/zq/coding/ReactNative/NuitComic/components/comic/ContentRow.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 39, 0, 0, 0, 0, 0, 0, 0, 0, 7, 46
+"/Users/zq/coding/ReactNative/NuitComic/components/comic/RatingRow.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 4, 29
+"/Users/zq/coding/ReactNative/NuitComic/components/comic/TagRow.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 0, 0, 0, 5, 42
+"/Users/zq/coding/ReactNative/NuitComic/components/comic/ViewNum.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 4, 20
+"/Users/zq/coding/ReactNative/NuitComic/components/home/ComicCover.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 3, 53
+"/Users/zq/coding/ReactNative/NuitComic/components/home/ComicList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 69, 0, 0, 0, 0, 0, 0, 0, 0, 10, 79
+"/Users/zq/coding/ReactNative/NuitComic/components/home/ComicRow.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 68, 0, 0, 0, 0, 0, 0, 0, 0, 4, 72
+"/Users/zq/coding/ReactNative/NuitComic/components/icon/IconSymbol.ios.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 42, 0, 0, 0, 0, 0, 0, 0, 0, 2, 44
+"/Users/zq/coding/ReactNative/NuitComic/components/icon/IconSymbol.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 0, 9, 5, 58
+"/Users/zq/coding/ReactNative/NuitComic/components/tab/TabBarBackground.ios.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 2, 2, 15
+"/Users/zq/coding/ReactNative/NuitComic/components/tab/TabBarBackground.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 3
+"/Users/zq/coding/ReactNative/NuitComic/hooks/useComicByPage.ts", "TypeScript", 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 31
+"/Users/zq/coding/ReactNative/NuitComic/hooks/useScrollOffset.ts", "TypeScript", 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 18
+"/Users/zq/coding/ReactNative/NuitComic/hooks/useThemeColor.ts", "TypeScript", 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 13
+"/Users/zq/coding/ReactNative/NuitComic/ios/.xcode.env", "Environment Variables", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9, 2, 12
+"/Users/zq/coding/ReactNative/NuitComic/ios/NuitComic/AppDelegate.h", "C++", 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 3, 8
+"/Users/zq/coding/ReactNative/NuitComic/ios/NuitComic/AppDelegate.mm", "Objective-C++", 0, 0, 0, 0, 0, 0, 0, 0, 0, 42, 0, 0, 0, 7, 14, 63
+"/Users/zq/coding/ReactNative/NuitComic/ios/NuitComic/Images.xcassets/AppIcon.appiconset/Contents.json", "JSON", 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14
+"/Users/zq/coding/ReactNative/NuitComic/ios/NuitComic/Images.xcassets/Contents.json", "JSON", 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7
+"/Users/zq/coding/ReactNative/NuitComic/ios/NuitComic/Images.xcassets/SplashScreenBackground.colorset/Contents.json", "JSON", 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20
+"/Users/zq/coding/ReactNative/NuitComic/ios/NuitComic/Images.xcassets/SplashScreenLogo.imageset/Contents.json", "JSON", 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23
+"/Users/zq/coding/ReactNative/NuitComic/ios/NuitComic/NuitComic-Bridging-Header.h", "C++", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 4
+"/Users/zq/coding/ReactNative/NuitComic/ios/NuitComic/SplashScreen.storyboard", "XML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42, 0, 0, 0, 0, 42
+"/Users/zq/coding/ReactNative/NuitComic/ios/NuitComic/main.m", "Objective-C", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 4, 11
+"/Users/zq/coding/ReactNative/NuitComic/ios/NuitComic/noop-file.swift", "Swift", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 5
+"/Users/zq/coding/ReactNative/NuitComic/ios/Podfile", "Ruby", 0, 0, 0, 0, 0, 0, 52, 0, 0, 0, 0, 0, 0, 3, 12, 67
+"/Users/zq/coding/ReactNative/NuitComic/ios/Podfile.properties.json", "JSON", 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6
+"/Users/zq/coding/ReactNative/NuitComic/package-lock.json", "JSON", 0, 0, 17669, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 17670
+"/Users/zq/coding/ReactNative/NuitComic/package.json", "JSON", 0, 0, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 65
+"/Users/zq/coding/ReactNative/NuitComic/tsconfig.json", "JSON with Comments", 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 12
+"Total", "-", 53, 4, 17801, 362, 1, 1173, 52, 5, 0, 42, 42, 7, 1, 57, 250, 19850

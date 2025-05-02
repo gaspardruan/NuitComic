@@ -105,18 +105,15 @@ export default function ComicDetail() {
         showsVerticalScrollIndicator={false}
       >
         {/* Cover */}
-        <View style={{ alignItems: "center" }}>
+        <View style={styles.cover}>
           <AutoSizedImage uri={cover} fallbackUri={image} />
         </View>
 
         {/* Details */}
-        <View
-          onLayout={onLayout}
-          style={{ paddingVertical: sectionGap, gap: 16 }}
-        >
-          <View style={{ gap: 8 }}>
+        <View onLayout={onLayout} style={styles.details}>
+          <View style={styles.detailsHeader}>
             <ThemedText type="mediumTitle">{title}</ThemedText>
-            <View style={{ flexDirection: "row", gap: 8 }}>
+            <View style={styles.honorRow}>
               <RatingRow score={score} />
               <ViewNum view={view} />
             </View>
@@ -141,6 +138,21 @@ export default function ComicDetail() {
 }
 
 const styles = StyleSheet.create({
+  cover: {
+    alignItems: "center",
+  },
+  details: {
+    paddingVertical: sectionGap,
+    gap: 16,
+  },
+  detailsHeader: {
+    gap: 8,
+  },
+  honorRow: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center",
+  },
   guessLike: {
     paddingTop: sectionGap,
     paddingBottom: 100,

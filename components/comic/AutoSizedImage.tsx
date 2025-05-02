@@ -17,7 +17,6 @@ const AutoSizedImage = ({
   const onError = () => {
     if (!isError) {
       setIsError(true);
-      console.log("Image load error");
     }
   };
 

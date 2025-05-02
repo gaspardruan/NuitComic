@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import ThemedText from "../ThemedText";
 import { formatNumber } from "@/common/util";
 import { memo } from "react";
@@ -9,11 +9,19 @@ type ViewNumProps = {
 
 const ViewNum = ({ view }: ViewNumProps) => {
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
+    <View style={styles.container}>
       <ThemedText type="tag">阅读指数</ThemedText>
       <ThemedText type="tag">{formatNumber(view)}</ThemedText>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+  },
+});
 
 export default memo(ViewNum);
