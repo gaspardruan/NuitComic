@@ -1,9 +1,10 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import ThemedText from "../ThemedText";
-import { memo, useEffect, useState } from "react";
-import { getComicChapterNum } from "@/axios/comic";
+import { memo } from "react";
+import { getComicAllChapter } from "@/axios/comic";
 import { IconSymbol } from "../icon/IconSymbol";
 import { formatTime } from "@/common/util";
+import { useQuery } from "@tanstack/react-query";
 
 type ContentRowProps = {
   id: string;
@@ -13,13 +14,11 @@ type ContentRowProps = {
 };
 
 const ContentRow = ({ id, updateTime, isOver, onClick }: ContentRowProps) => {
-  const [chapterNum, setChapterNum] = useState(0);
-
-  useEffect(() => {
-    getComicChapterNum(id).then((res) => {
-      setChapterNum(res);
-    });
-  }, [id]);
+  const { data } = useQuery({
+    queryKey: ["chapter", id],
+    queryFn: async () => getComicAllChapter(id),
+  });
+  const chapterNum = data?.length ?? 0;
 
   return (
     <TouchableOpacity

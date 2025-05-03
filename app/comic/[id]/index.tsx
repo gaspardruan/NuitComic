@@ -21,9 +21,9 @@ import GuessLike from "@/components/GuessLike";
 import { IconSymbol } from "@/components/icon/IconSymbol";
 import ThemedText from "@/components/ThemedText";
 import { useScrollOffset } from "@/hooks/useScrollOffset";
-import { ComicChapter } from "@/common/interface";
 import { getComicAllChapter } from "@/axios/comic";
 import { ContentModal } from "@/components/comic/content/ContentModal";
+import { useQuery } from "@tanstack/react-query";
 
 const topGap = 4;
 const sectionGap = 20;
@@ -55,14 +55,19 @@ export default function ComicDetail() {
     updateTime: string;
     isOver: string;
   }>();
+  // Heaer
   const headerHeight = useHeaderHeight();
-
   const [textY, setTextY] = useState(0);
   const [showHeader, onScrollForHeader] = useScrollOffset(topGap);
   const [showTitle, onScrollForTitle] = useScrollOffset(textY - headerHeight);
 
+  // Content
   const [isContentVisible, setIsContentVisible] = useState(false);
-  const [chapters, setChapters] = useState<ComicChapter[]>([]);
+  const { data } = useQuery({
+    queryKey: ["chapter", id],
+    queryFn: async () => getComicAllChapter(id),
+  });
+  const chapters = data ?? [];
 
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     onScrollForHeader(e);
@@ -78,17 +83,12 @@ export default function ComicDetail() {
   };
 
   const onContentClick = useCallback(() => {
-    if (chapters.length === 0) {
-      getComicAllChapter(id).then((res) => {
-        setChapters(res);
-      });
-    }
     setIsContentVisible(true);
-  }, [chapters.length, id]);
+  }, []);
 
-  const onContentClose = () => {
+  const onContentClose = useCallback(() => {
     setIsContentVisible(false);
-  };
+  }, []);
 
   return (
     <>

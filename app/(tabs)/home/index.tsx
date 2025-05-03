@@ -1,5 +1,4 @@
 import { getIndexData } from "@/axios/comic";
-import { IndexComicData } from "@/common/interface";
 import GuessLike from "@/components/GuessLike";
 import { Section } from "@/components/ComicSection";
 import { Loading } from "@/components/Loading";
@@ -8,9 +7,9 @@ import { useScrollOffset } from "@/hooks/useScrollOffset";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, Stack } from "expo-router";
-import { useEffect, useState } from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useQuery } from "@tanstack/react-query";
 
 const yOffset = 24;
 
@@ -23,23 +22,10 @@ export default function HomeScreen() {
 
   const textColor = useThemeColor("text");
 
-  const [comics, setComics] = useState<IndexComicData>({
-    new: [],
-    update: [],
-    mostView: [],
-    mostFollow: [],
-    mostViewOver: [],
-    recommend: [],
-    mostSearch: [],
+  const { data: comics } = useQuery({
+    queryKey: ["home"],
+    queryFn: getIndexData,
   });
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    getIndexData().then((res) => {
-      setComics(res);
-      setLoading(false);
-    });
-  }, []);
 
   return (
     <>
@@ -52,7 +38,7 @@ export default function HomeScreen() {
           headerTintColor: textColor,
         }}
       />
-      {loading ? (
+      {!comics ? (
         <Loading />
       ) : (
         <ScrollView

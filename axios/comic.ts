@@ -10,6 +10,15 @@ axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 axios.defaults.timeout = 5000;
 
+axios.interceptors.request.use((request) => {
+  console.log("Request:", {
+    method: request.method,
+    url: request.url,
+    data: request.data,
+  });
+  return request;
+});
+
 const _post = async (url: string, data: any): Promise<Comic[]> => {
   try {
     const res = await axios.post(url, data);

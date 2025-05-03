@@ -1,30 +1,24 @@
 import { Comic } from "@/common/interface";
-import { useEffect, useState } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 type ComicRequest = (page?: number) => Promise<[Comic[], boolean]>;
 
 export function useComicByPage(request: ComicRequest): [Comic[], () => void] {
-  const [comics, setComics] = useState<Comic[]>([]);
-  const [page, setPage] = useState(1);
-  const [lastPage, setLastPage] = useState(false);
-
-  useEffect(() => {
-    request(1).then(([data, isLast]) => {
-      setComics(data);
-      setLastPage(isLast);
-      setPage(2);
-    });
-  }, [request]);
-
-  const loadNextPage = () => {
-    if (lastPage) return;
-
-    request(page).then(([data, isLast]) => {
-      setComics((prev) => [...prev, ...data]); // 函数式更新
-      setLastPage(isLast);
-      setPage((prev) => prev + 1); // 函数式更新
-    });
+  const fetchComics = async ({ pageParam = 1 }) => {
+    const [data, isLast] = await request(pageParam);
+    return { data, isLast };
   };
 
-  return [comics, loadNextPage];
+  const { data, fetchNextPage } = useInfiniteQuery({
+    queryKey: [request.name],
+    queryFn: fetchComics,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.isLast ? undefined : allPages.length + 1;
+    },
+  });
+
+  const comics = data?.pages.flatMap((page) => page.data) || [];
+
+  return [comics, fetchNextPage];
 }
