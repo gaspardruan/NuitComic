@@ -35,3 +35,11 @@ export const formatTimeToDate = (time: string): string => {
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}年${month}月${day}日`;
 };
+
+const imageBaseURL = "https://ii.juhiepay.com/public";
+
+export const getAbsoluteImageURLs = (relateiveURLs: string[]): string[] => {
+  return relateiveURLs.map((url) => {
+    return `${imageBaseURL}${url}`;
+  });
+};

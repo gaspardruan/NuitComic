@@ -15,7 +15,7 @@ type ContentRowProps = {
 
 const ContentRow = ({ id, updateTime, isOver, onClick }: ContentRowProps) => {
   const { data } = useQuery({
-    queryKey: ["chapter", id],
+    queryKey: ["comic", id],
     queryFn: async () => getComicAllChapter(id),
   });
   const chapterNum = data?.length ?? 0;

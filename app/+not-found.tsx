@@ -1,11 +1,12 @@
+import ThemedText from "@/components/ThemedText";
 import { Link, usePathname } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function NotFound() {
   const pathname = usePathname();
   return (
     <View style={styles.container}>
-      <Text>{pathname}</Text>
+      <ThemedText>{pathname}</ThemedText>
       <Link href="/home" style={styles.link}>
         Go to home screen!
       </Link>

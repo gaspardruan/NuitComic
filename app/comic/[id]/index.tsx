@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import { tintColorLight } from "@/common/theme";
-import AutoSizedImage from "@/components/comic/AutoSizedImage";
+import AutoSizedImage from "@/components/comic/AutoSizeCover";
 import ComicDesc from "@/components/comic/ComicDesc";
 import ContentRow from "@/components/comic/ContentRow";
 import RatingRow from "@/components/comic/RatingRow";
@@ -64,7 +64,7 @@ export default function ComicDetail() {
   // Content
   const [isContentVisible, setIsContentVisible] = useState(false);
   const { data } = useQuery({
-    queryKey: ["chapter", id],
+    queryKey: ["comic", id],
     queryFn: async () => getComicAllChapter(id),
   });
   const chapters = data ?? [];

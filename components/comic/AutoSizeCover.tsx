@@ -7,7 +7,7 @@ type AutoSizedImageProps = ImageProps & {
   fallbackUri: string;
 };
 
-const AutoSizedImage = ({
+const AutoSizedCover = ({
   uri,
   fallbackUri,
   style,
@@ -59,4 +59,4 @@ const AutoSizedImage = ({
   );
 };
 
-export default memo(AutoSizedImage);
+export default memo(AutoSizedCover);
