@@ -1,27 +1,54 @@
-import { Loading } from "@/components/Loading";
 import { Image, ImageStyle, useImage } from "expo-image";
 import { memo } from "react";
-import { StyleProp } from "react-native";
+import { StyleProp, Dimensions } from "react-native";
 
 type ComicImageProps = {
   uri: string;
   style: StyleProp<ImageStyle>;
+  index: number;
+  setRatio: (index: number, ratio: number) => void;
+  getRatio: (index: number) => number;
 };
 
-const ComicImage = ({ uri, style }: ComicImageProps) => {
-  const image = useImage({
-    uri,
-    headers: { Referer: "https://yymh.app/" },
-  });
+const { width, height } = Dimensions.get("window");
 
-  if (!image) {
-    return <Loading />;
+const screenAspectRatio = width / height;
+
+const ComicImage = ({
+  uri,
+  getRatio,
+  setRatio,
+  index,
+  style,
+}: ComicImageProps) => {
+  const image = useImage(
+    {
+      uri,
+      headers: { Referer: "https://yymh.app/" },
+    },
+    {
+      onError: () => {},
+    }
+  );
+
+  const lastRatio = getRatio(index);
+  let ratio = lastRatio ?? screenAspectRatio;
+  if (!lastRatio && image) {
+    ratio = image.width / image.height;
+    setRatio(index, ratio);
   }
 
-  const aspectRatio = image.width / image.height;
-
   return (
-    <Image source={image} style={[{ width: "100%", aspectRatio }, style]} />
+    <Image
+      source={image}
+      placeholder={require("@/assets/images/placeholder.png")}
+      style={[
+        { width: "100%", aspectRatio: ratio, backgroundColor: "rgb(1, 1, 1)" },
+        style,
+      ]}
+      placeholderContentFit="contain"
+      transition={250}
+    />
   );
 };
 

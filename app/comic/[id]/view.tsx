@@ -14,5 +14,5 @@ export default function ComicView() {
   const chapters = data ?? [];
   const imageURLs = getAbsoluteImageURLs(chapters[Number(index)].imageList);
 
-  return <ComicReader imageURLs={imageURLs} />;
+  return <ComicReader id={id} index={index} imageURLs={imageURLs} />;
 }
