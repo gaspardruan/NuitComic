@@ -14,7 +14,7 @@ type ContentRowProps = {
 };
 
 const ContentRow = ({ id, updateTime, isOver, onClick }: ContentRowProps) => {
-  const { data } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["comic", id],
     queryFn: async () => getComicAllChapter(id),
   });
@@ -23,7 +23,7 @@ const ContentRow = ({ id, updateTime, isOver, onClick }: ContentRowProps) => {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      style={styles.container}
+      style={[styles.container, { opacity: isLoading ? 0 : 1 }]}
       onPress={onClick}
     >
       <ThemedText type="subtitle">目录</ThemedText>

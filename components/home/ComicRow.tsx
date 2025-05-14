@@ -36,6 +36,8 @@ export function ComicRow({ comic }: ComicRowProps) {
             headers: { Referer: "https://yymh.app/" },
           }}
           style={styles.coverContainer}
+          placeholder={require("@/assets/images/smile.png")}
+          placeholderContentFit="contain"
         />
         <View style={styles.infoContainer}>
           <ThemedText type="default" numberOfLines={1} ellipsizeMode="tail">

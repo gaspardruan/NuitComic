@@ -31,11 +31,13 @@ export function ComicCover({ comic }: ComicCoverProps) {
     >
       <View>
         <Image
+          placeholder={require("@/assets/images/smile.png")}
           source={{
             uri: comic.image,
             headers: { Referer: "https://yymh.app/" },
           }}
           style={styles.container}
+          placeholderContentFit="contain"
         />
         <View>
           <ThemedText type="default" numberOfLines={1} ellipsizeMode="tail">
@@ -55,5 +57,7 @@ const styles = StyleSheet.create({
     width: "100%",
     aspectRatio: 0.75,
     borderRadius: 6,
+    alignContent: "center",
+    justifyContent: "center",
   },
 });

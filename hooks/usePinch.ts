@@ -1,6 +1,5 @@
 import { Gesture } from "react-native-gesture-handler";
 import {
-  clamp,
   useAnimatedStyle,
   useSharedValue,
   withTiming,

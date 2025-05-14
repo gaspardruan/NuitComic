@@ -15,6 +15,7 @@ export const GuessLike = ({
   useSecondaryBackground,
 }: GuessLikeProps) => {
   const [guess, setGuess] = useState<Comic[]>([]);
+  const [loading, setLoading] = useState(true);
   const guessLike = () => {
     getGuessLikeComic().then((res) => {
       setGuess(res);
@@ -26,6 +27,7 @@ export const GuessLike = ({
 
   useEffect(() => {
     guessLike();
+    setLoading(false);
   }, []);
 
   return (
@@ -34,7 +36,7 @@ export const GuessLike = ({
       comics={guess}
       icon="arrow.trianglehead.2.clockwise"
       headerAction={guessLike}
-      style={[{ backgroundColor: bg }, style]}
+      style={[{ backgroundColor: bg, opacity: loading ? 0 : 1 }, style]}
     />
   );
 };
