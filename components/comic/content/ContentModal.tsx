@@ -9,7 +9,7 @@ import {
 
 import ThemedText from "../../ThemedText";
 import { ComicChapter } from "@/common/interface";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { IconSymbol } from "../../icon/IconSymbol";
 import { ChapterList } from "./ChapterList";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -17,6 +17,10 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 const { height } = Dimensions.get("window");
 const inDuration = 450;
 const outDuration = 250;
+
+const iconSize = 18;
+const iconPadding = 12;
+const iconContentSize = 2 * iconPadding + iconSize;
 
 type ContentModalProps = {
   chapters: ComicChapter[];
@@ -29,18 +33,33 @@ export const ContentModal = ({
   onClose,
   chapters,
 }: ContentModalProps) => {
-  const [isModalVisible, setModalVisible] = useState(isVisible);
-
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(height)).current;
 
   const backgroundColor = useThemeColor("background");
 
-  console.log("ContentModal render");
+  // hide the modal after sliding-out animation
+  const handleClose = () => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: outDuration,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: height,
+        duration: outDuration,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      onClose();
+    });
+  };
 
+  // slide in after the appearance of the modal
   useEffect(() => {
     if (isVisible) {
-      setModalVisible(true);
+      // setModalVisible(true);
       Animated.parallel([
         Animated.timing(fadeAnim, {
           toValue: 1,
@@ -53,32 +72,16 @@ export const ContentModal = ({
           useNativeDriver: true,
         }),
       ]).start();
-    } else {
-      Animated.parallel([
-        Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: outDuration,
-          useNativeDriver: true,
-        }),
-        Animated.timing(slideAnim, {
-          toValue: height,
-          duration: outDuration,
-          useNativeDriver: true,
-        }),
-      ]).start(() => {
-        setModalVisible(false);
-        slideAnim.setValue(height);
-      });
     }
   }, [isVisible, fadeAnim, slideAnim]);
 
   return (
     <>
-      <Modal visible={isModalVisible} animationType="none" transparent={true}>
+      <Modal visible={isVisible} animationType="none" transparent={true}>
         <Animated.View style={[styles.modalBackground, { opacity: fadeAnim }]}>
           <TouchableOpacity
             style={[styles.fullScreenTouchable]}
-            onPress={onClose}
+            onPress={handleClose}
           />
         </Animated.View>
 
@@ -90,14 +93,16 @@ export const ContentModal = ({
         >
           <View style={[styles.modalContent, { backgroundColor }]}>
             <View style={styles.titleContainer}>
-              <View style={{ width: 34, height: 34 }} />
+              <View
+                style={{ width: iconContentSize, height: iconContentSize }}
+              />
               <ThemedText type="subtitle">目录</ThemedText>
               <TouchableOpacity
-                style={{ padding: 8 }}
+                style={{ padding: iconPadding }}
                 activeOpacity={0.5}
-                onPress={onClose}
+                onPress={handleClose}
               >
-                <IconSymbol name="xmark" size={18} />
+                <IconSymbol name="xmark" size={iconSize} />
               </TouchableOpacity>
             </View>
             <ChapterList chapters={chapters} onClose={onClose} />

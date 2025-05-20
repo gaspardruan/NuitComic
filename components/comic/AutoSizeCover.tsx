@@ -32,15 +32,15 @@ const AutoSizedCover = ({
   const height = image?.height;
 
   let isWidthLarger = true;
-  let aspectRatio = isError ? 0.75 : 400 / 213;
+  let aspectRatio = isError ? 0.75 : 400 / 208;
   let borderRadius = isError ? 12 : 6;
-  let w: DimensionValue = isError ? "40%" : "100%";
+  let w: DimensionValue = isError ? "39%" : "100%";
 
   if (width && height) {
     isWidthLarger = width > height;
-    aspectRatio = isWidthLarger ? 400 / 213 : 0.75;
+    aspectRatio = isWidthLarger ? 400 / 208 : 0.75;
     borderRadius = isWidthLarger ? 6 : 12;
-    w = isWidthLarger ? "100%" : "40%";
+    w = isWidthLarger ? "100%" : "39%";
   }
 
   return (

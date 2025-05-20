@@ -1,6 +1,6 @@
 import { useHeaderHeight } from "@react-navigation/elements";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import {
   View,
   ScrollView,
@@ -13,7 +13,7 @@ import {
 import { tintColorLight } from "@/common/theme";
 import AutoSizedImage from "@/components/comic/AutoSizeCover";
 import ComicDesc from "@/components/comic/ComicDesc";
-import ContentRow from "@/components/comic/ContentRow";
+import ContentBar from "@/components/comic/content/ContentBar";
 import RatingRow from "@/components/comic/RatingRow";
 import TagRow from "@/components/comic/TagRow";
 import ViewNum from "@/components/comic/ViewNum";
@@ -21,9 +21,6 @@ import GuessLike from "@/components/GuessLike";
 import { IconSymbol } from "@/components/icon/IconSymbol";
 import ThemedText from "@/components/ThemedText";
 import { useScrollOffset } from "@/hooks/useScrollOffset";
-import { getComicAllChapter } from "@/axios/comic";
-import { ContentModal } from "@/components/comic/content/ContentModal";
-import { useQuery } from "@tanstack/react-query";
 
 const topGap = 4;
 const sectionGap = 20;
@@ -61,14 +58,6 @@ export default function ComicDetail() {
   const [showHeader, onScrollForHeader] = useScrollOffset(topGap);
   const [showTitle, onScrollForTitle] = useScrollOffset(textY - headerHeight);
 
-  // Content
-  const [isContentVisible, setIsContentVisible] = useState(false);
-  const { data } = useQuery({
-    queryKey: ["comic", id],
-    queryFn: async () => getComicAllChapter(id),
-  });
-  const chapters = data ?? [];
-
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     onScrollForHeader(e);
     onScrollForTitle(e);
@@ -81,14 +70,6 @@ export default function ComicDetail() {
     const { y } = e.nativeEvent.layout;
     setTextY(headerHeight + topGap + y + sectionGap + titleHeight);
   };
-
-  const onContentClick = useCallback(() => {
-    setIsContentVisible(true);
-  }, []);
-
-  const onContentClose = useCallback(() => {
-    setIsContentVisible(false);
-  }, []);
 
   return (
     <>
@@ -137,24 +118,12 @@ export default function ComicDetail() {
 
           <ComicDesc desc={desc} />
 
-          <ContentRow
-            id={id}
-            updateTime={updateTime}
-            isOver={isOver}
-            onClick={onContentClick}
-          />
+          <ContentBar id={id} updateTime={updateTime} isOver={isOver} />
         </View>
 
         {/* More */}
         <GuessLike style={styles.guessLike} useSecondaryBackground />
       </ScrollView>
-
-      {/* Content Modal */}
-      <ContentModal
-        isVisible={isContentVisible}
-        onClose={onContentClose}
-        chapters={chapters}
-      />
     </>
   );
 }
