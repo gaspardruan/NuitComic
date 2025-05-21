@@ -11,6 +11,7 @@ export default function ComicView() {
     queryKey: ["comic", id],
     queryFn: async () => getComicAllChapter(id),
   });
+
   const chapters = data ?? [];
   const imageURLs = getAbsoluteImageURLs(chapters[Number(index)].imageList);
 

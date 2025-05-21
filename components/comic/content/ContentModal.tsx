@@ -105,7 +105,7 @@ export const ContentModal = ({
                 <IconSymbol name="xmark" size={iconSize} />
               </TouchableOpacity>
             </View>
-            <ChapterList chapters={chapters} onClose={onClose} />
+            <ChapterList chapters={chapters} onClose={handleClose} />
           </View>
         </Animated.View>
       </Modal>

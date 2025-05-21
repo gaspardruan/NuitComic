@@ -47,7 +47,10 @@ export const ComicReader = ({ imageURLs, id, index }: ComicReaderProps) => {
 
   const router = useRouter();
   const onEndReached = () => {
-    router.replace({ pathname: "./view", params: { index: index + 1 } });
+    router.replace({
+      pathname: "./view",
+      params: { index: String(Number(index) + 1) },
+    });
   };
 
   useEffect(() => {
@@ -63,8 +66,6 @@ export const ComicReader = ({ imageURLs, id, index }: ComicReaderProps) => {
   if (isError) {
     return <Error error={error?.message} />;
   }
-
-  console.log("Reader");
 
   return (
     <GestureDetector gesture={pinchGesture}>
