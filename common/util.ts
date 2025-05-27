@@ -36,7 +36,7 @@ export const formatTimeToDate = (time: string): string => {
   return `${year}年${month}月${day}日`;
 };
 
-const imageBaseURL = "https://ii.juhiepay.com/public";
+export const imageBaseURL = "https://icny.tengxun.click/public";
 
 export const getAbsoluteImageURLs = (relateiveURLs: string[]): string[] => {
   return relateiveURLs.map((url) => {

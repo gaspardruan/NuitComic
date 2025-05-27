@@ -1,8 +1,7 @@
 import { Comic, ComicChapter, IndexComicData } from "@/common/interface";
-import { formatTimeToDate } from "@/common/util";
+import { formatTimeToDate, imageBaseURL } from "@/common/util";
 import axios from "axios";
 
-const imageBaseUrl = "https://ii.juhiepay.com/public";
 const pageSize = 20;
 
 axios.defaults.baseURL = "https://yymh.app/home/api";
@@ -217,8 +216,8 @@ const refineComic = (comics: any) => {
       comic.author = comic.auther;
       comic.score = comic.pingfen ?? 9.9;
       comic.follow = comic.mark;
-      comic.image = `${imageBaseUrl}${comic.image}`;
-      comic.cover = `${imageBaseUrl}${comic.cover}`;
+      comic.image = `${imageBaseURL}${comic.image}`;
+      comic.cover = `${imageBaseURL}${comic.cover}`;
       comic.updateTime = comic.update_time;
       comic.isOver = comic.mhstatus;
       // delete comic.auther;
