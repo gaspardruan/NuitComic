@@ -1,5 +1,5 @@
 import { Image, ImageStyle, useImage } from "expo-image";
-import { memo } from "react";
+import { memo, useRef } from "react";
 import { StyleProp, Dimensions } from "react-native";
 
 type ComicImageProps = {
@@ -21,13 +21,21 @@ const ComicImage = ({
   index,
   style,
 }: ComicImageProps) => {
+  const retryCount = useRef<number>(0);
   const image = useImage(
     {
       uri,
       headers: { Referer: "https://yymh.app/" },
     },
     {
-      onError: () => {},
+      onError: (err, retry) => {
+        if (retryCount.current < 3) {
+          retry();
+          retryCount.current++;
+        } else {
+          throw err;
+        }
+      },
     }
   );
 

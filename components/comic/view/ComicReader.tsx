@@ -89,7 +89,6 @@ export const ComicReader = ({ imageURLs, id, index }: ComicReaderProps) => {
           initialNumToRender={5}
           maxToRenderPerBatch={10}
           windowSize={11}
-          removeClippedSubviews={true}
         />
       </Animated.View>
     </GestureDetector>
