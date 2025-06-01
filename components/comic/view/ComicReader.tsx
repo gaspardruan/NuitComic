@@ -6,15 +6,16 @@ import { Image } from "expo-image";
 import { useQuery } from "@tanstack/react-query";
 import { Loading } from "@/components/Loading";
 import { Error } from "@/components/Error";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePinch } from "@/hooks/usePinch";
 import { useFadeIn } from "@/hooks/useFadeIn";
-import { useRouter } from "expo-router";
+import { ComicChapter } from "@/common/interface";
+import { getAbsoluteImageURLs } from "@/common/util";
 
 type ComicReaderProps = {
-  imageURLs: string[];
+  chapters: ComicChapter[];
   id: string;
-  index: string;
+  index: number;
 };
 
 async function prefetchImages(imageURLs: string[]) {
@@ -22,7 +23,17 @@ async function prefetchImages(imageURLs: string[]) {
   return ok;
 }
 
-export const ComicReader = ({ imageURLs, id, index }: ComicReaderProps) => {
+export const ComicReader = ({ chapters, id, index }: ComicReaderProps) => {
+  const _imageURLs = useMemo(
+    () =>
+      chapters.length === 0
+        ? []
+        : getAbsoluteImageURLs(chapters[index].imageList),
+    [chapters, index]
+  );
+  const [imageURLs, setImageURLs] = useState<string[]>(_imageURLs);
+  const [curIndex, setCurIndex] = useState<number>(index);
+
   // animation
   const { pinchGesture, animatedStyle } = usePinch();
   const { opacity, fadeInStyle } = useFadeIn();
@@ -45,19 +56,31 @@ export const ComicReader = ({ imageURLs, id, index }: ComicReaderProps) => {
     enabled: imageURLs.length > 0,
   });
 
-  const router = useRouter();
-  const onEndReached = () => {
-    router.replace({
-      pathname: "./view",
-      params: { index: String(Number(index) + 1) },
-    });
+  const loadNextChapter = () => {
+    if (curIndex < chapters.length - 1) {
+      const next = getAbsoluteImageURLs(chapters[curIndex + 1].imageList);
+      setCurIndex(curIndex + 1);
+      setImageURLs(imageURLs.concat(next));
+    }
   };
 
+  const onEndReached = () => {
+    loadNextChapter();
+  };
+
+  // fadeIn once loaded
   useEffect(() => {
-    if (!isLoading && !isError) {
+    if (!isLoading && !isError && imageURLs.length > 0) {
       opacity.value = withTiming(1, { duration: 250 });
     }
-  }, [isLoading, isError, opacity]);
+  }, [isLoading, isError, opacity, imageURLs.length]);
+
+  // ensure imageURLs is consistent with chatpers[index]
+  useEffect(() => {
+    if (_imageURLs.length > imageURLs.length) {
+      setImageURLs(_imageURLs);
+    }
+  }, [_imageURLs, imageURLs]);
 
   if (isLoading) {
     return <Loading />;
@@ -71,6 +94,7 @@ export const ComicReader = ({ imageURLs, id, index }: ComicReaderProps) => {
     <GestureDetector gesture={pinchGesture}>
       <Animated.View style={[styles.zoomContainer, animatedStyle, fadeInStyle]}>
         <FlatList
+          style={{ flex: 1 }}
           data={imageURLs}
           keyExtractor={(item) => item}
           renderItem={({ item, index }) => (
@@ -83,12 +107,13 @@ export const ComicReader = ({ imageURLs, id, index }: ComicReaderProps) => {
             />
           )}
           onEndReached={onEndReached}
+          onEndReachedThreshold={4}
           contentContainerStyle={styles.contentContainer}
-          showsVerticalScrollIndicator={false}
+          // showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          initialNumToRender={5}
-          maxToRenderPerBatch={10}
-          windowSize={11}
+          initialNumToRender={7}
+          maxToRenderPerBatch={14}
+          windowSize={15}
         />
       </Animated.View>
     </GestureDetector>
