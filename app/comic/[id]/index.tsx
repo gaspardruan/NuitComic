@@ -8,6 +8,7 @@ import {
   NativeScrollEvent,
   LayoutChangeEvent,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 
 import { tintColorLight } from "@/common/theme";
@@ -21,9 +22,11 @@ import GuessLike from "@/components/GuessLike";
 import { IconSymbol } from "@/components/icon/IconSymbol";
 import ThemedText from "@/components/ThemedText";
 import { useScrollOffset } from "@/hooks/useScrollOffset";
+import { BottomBar } from "@/components/comic/BottomBar";
 
 const topGap = 4;
 const sectionGap = 20;
+const horizontalGap = 20;
 const titleHeight = 24;
 
 export default function ComicDetail() {
@@ -95,7 +98,7 @@ export default function ComicDetail() {
       <ScrollView
         style={{
           paddingTop: headerHeight + topGap,
-          paddingHorizontal: 20,
+          paddingHorizontal: horizontalGap,
         }}
         onScroll={onScroll}
         showsVerticalScrollIndicator={false}
@@ -124,6 +127,22 @@ export default function ComicDetail() {
         {/* More */}
         <GuessLike style={styles.guessLike} useSecondaryBackground />
       </ScrollView>
+      <BottomBar>
+        <View style={styles.buttonGroup}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={[styles.bottomButton, { marginRight: horizontalGap / 2 }]}
+          >
+            <ThemedText type="defaultLight">收藏</ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={[styles.bottomButton, { marginLeft: horizontalGap / 2 }]}
+          >
+            <ThemedText type="defaultLight">开始阅读</ThemedText>
+          </TouchableOpacity>
+        </View>
+      </BottomBar>
     </>
   );
 }
@@ -147,7 +166,23 @@ const styles = StyleSheet.create({
   guessLike: {
     paddingTop: sectionGap,
     paddingBottom: 100,
-    paddingHorizontal: 20,
-    marginHorizontal: -20,
+    paddingHorizontal: horizontalGap,
+    marginHorizontal: -horizontalGap,
+  },
+  buttonGroup: {
+    height: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 10,
+    marginHorizontal: horizontalGap,
+  },
+  bottomButton: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: tintColorLight,
+    height: "100%",
+    borderRadius: 8,
   },
 });
