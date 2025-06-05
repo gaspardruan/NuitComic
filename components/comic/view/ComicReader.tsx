@@ -1,16 +1,16 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GestureDetector } from "react-native-gesture-handler";
 import Animated, { withTiming } from "react-native-reanimated";
 import { FlatList, StyleSheet } from "react-native";
-import ComicImage from "./ComicImage";
 import { Image } from "expo-image";
 import { useQuery } from "@tanstack/react-query";
-import { Loading } from "@/components/Loading";
-import { Error } from "@/components/Error";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { usePinch } from "@/hooks/usePinch";
 import { useFadeIn } from "@/hooks/useFadeIn";
 import { ComicChapter } from "@/common/interface";
 import { getAbsoluteImageURLs } from "@/common/util";
+import { useZoomPan } from "@/hooks/useZoomPan";
+import ComicImage from "./ComicImage";
+import { Error } from "@/components/Error";
+import { Loading } from "@/components/Loading";
 
 type ComicReaderProps = {
   chapters: ComicChapter[];
@@ -35,7 +35,13 @@ export const ComicReader = ({ chapters, id, index }: ComicReaderProps) => {
   const [curIndex, setCurIndex] = useState<number>(index);
 
   // animation
-  const { pinchGesture, animatedStyle } = usePinch();
+  // const { pinchGesture, animatedStyle } = usePinch();
+  // const { panGesture, animatedStyle: panStyle } = usePan();
+  // const composedGesture = Gesture.Simultaneous(pinchGesture, panGesture);
+  const { gesture, animatedStyle } = useZoomPan({
+    minScale: 1,
+    maxScale: 3,
+  });
   const { opacity, fadeInStyle } = useFadeIn();
 
   // record the ratio of each image
@@ -91,10 +97,9 @@ export const ComicReader = ({ chapters, id, index }: ComicReaderProps) => {
   }
 
   return (
-    <GestureDetector gesture={pinchGesture}>
-      <Animated.View style={[styles.zoomContainer, animatedStyle, fadeInStyle]}>
+    <GestureDetector gesture={gesture}>
+      <Animated.View style={[styles.zoomContainer, fadeInStyle, animatedStyle]}>
         <FlatList
-          style={{ flex: 1 }}
           data={imageURLs}
           keyExtractor={(item) => item}
           renderItem={({ item, index }) => (
@@ -114,6 +119,8 @@ export const ComicReader = ({ chapters, id, index }: ComicReaderProps) => {
           initialNumToRender={7}
           maxToRenderPerBatch={14}
           windowSize={15}
+          removeClippedSubviews={false}
+          renderToHardwareTextureAndroid={true}
         />
       </Animated.View>
     </GestureDetector>
@@ -122,7 +129,7 @@ export const ComicReader = ({ chapters, id, index }: ComicReaderProps) => {
 
 const styles = StyleSheet.create({
   zoomContainer: {
-    flex: 1,
+    // flex: 1,
   },
   contentContainer: {
     // alignItems: "center",
