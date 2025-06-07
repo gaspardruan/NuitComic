@@ -99,9 +99,9 @@ export const useZoomPan = ({
       }
     });
 
-  const gesture = Gesture.Simultaneous(
-    Gesture.Native(),
-    Gesture.Race(Gesture.Exclusive(doubleTap, tap), pinch, pan)
+  const gesture = Gesture.Race(
+    Gesture.Simultaneous(Gesture.Native(), pinch, pan),
+    Gesture.Exclusive(doubleTap, tap)
   );
 
   const animatedStyle = useAnimatedStyle(() => ({
