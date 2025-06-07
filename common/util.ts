@@ -1,3 +1,5 @@
+import { ComicChapter, ShowImage } from "./interface";
+
 export const formatSliceKeyword = (keyword: string) => {
   if (!keyword) return "";
   return keyword.split(",").slice(0, 2).join(" ");
@@ -42,4 +44,28 @@ export const getAbsoluteImageURLs = (relateiveURLs: string[]): string[] => {
   return relateiveURLs.map((url) => {
     return `${imageBaseURL}${url}`;
   });
+};
+
+export const getShowImages = (
+  chapters: ComicChapter[],
+  chapterIndex: number
+): ShowImage[] => {
+  if (chapterIndex < 0 || chapterIndex >= chapters.length) {
+    return [];
+  }
+  return chapters[chapterIndex].imageList.map((url, index) => ({
+    key: url,
+    url: `${imageBaseURL}${url}`,
+    indexInChapter: index,
+    chapterIndex,
+  }));
+};
+
+const maxTitleLen = 12;
+export const shortTitle = (title: string) => {
+  let newTitle = title;
+  if (title.length > maxTitleLen) {
+    newTitle = title.substring(0, maxTitleLen) + "...";
+  }
+  return newTitle;
 };

@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { GestureDetector } from "react-native-gesture-handler";
-import Animated, { withTiming } from "react-native-reanimated";
-import { FlatList, StyleSheet } from "react-native";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Animated, { runOnJS, withTiming } from "react-native-reanimated";
+import { FlatList, StyleSheet, ViewToken } from "react-native";
 import { Image } from "expo-image";
 import { useQuery } from "@tanstack/react-query";
 import { useFadeIn } from "@/hooks/useFadeIn";
-import { ComicChapter } from "@/common/interface";
-import { getAbsoluteImageURLs } from "@/common/util";
+import { ComicChapter, ShowImage } from "@/common/interface";
+import { getShowImages } from "@/common/util";
 import { useZoomPan } from "@/hooks/useZoomPan";
 import ComicImage from "./ComicImage";
 import { Error } from "@/components/Error";
@@ -16,6 +16,9 @@ type ComicReaderProps = {
   chapters: ComicChapter[];
   id: string;
   index: number;
+  onUpdateChapter?: (chapterIndex: number) => void;
+  onTap?: () => void;
+  onScrollBeginDrag?: () => void;
 };
 
 async function prefetchImages(imageURLs: string[]) {
@@ -23,34 +26,44 @@ async function prefetchImages(imageURLs: string[]) {
   return ok;
 }
 
-export const ComicReader = ({ chapters, id, index }: ComicReaderProps) => {
-  const _imageURLs = useMemo(
-    () =>
-      chapters.length === 0
-        ? []
-        : getAbsoluteImageURLs(chapters[index].imageList),
+const ComicReader = ({
+  chapters,
+  id,
+  index,
+  onUpdateChapter,
+  onTap,
+  onScrollBeginDrag,
+}: ComicReaderProps) => {
+  // initShowImages are possibly empty, which depends on the useQuery expiration
+  const initShowImages = useMemo(
+    () => (chapters.length === 0 ? [] : getShowImages(chapters, index)),
     [chapters, index]
   );
-  const [imageURLs, setImageURLs] = useState<string[]>(_imageURLs);
-  const [curIndex, setCurIndex] = useState<number>(index);
+  const [showImages, setShowImages] = useState<ShowImage[]>(initShowImages);
 
-  // animation
-  // const { pinchGesture, animatedStyle } = usePinch();
-  // const { panGesture, animatedStyle: panStyle } = usePan();
-  // const composedGesture = Gesture.Simultaneous(pinchGesture, panGesture);
-  const { gesture, animatedStyle } = useZoomPan({
+  // nextIndex is the recently loaded chpater index, always increments
+  const [nextIndex, setNextIndex] = useState<number>(index);
+
+  const { zoomPanGesture, animatedStyle } = useZoomPan({
     minScale: 1,
     maxScale: 3,
   });
+  const tapGesture = Gesture.Tap().onEnd(() => {
+    if (onTap) {
+      runOnJS(onTap)();
+    }
+  });
+  const gesture = Gesture.Race(tapGesture, zoomPanGesture);
+
+  // opacity is transition from loading to loaded
   const { opacity, fadeInStyle } = useFadeIn();
 
-  // record the ratio of each image
-  const ratios = useRef<number[]>(Array(imageURLs.length));
-
+  // ratios are records the ratio of each image, which is mandatory for expo-image,
+  // initial value is a full screen ratio
+  const ratios = useRef<number[]>(Array(showImages.length));
   const setRatio = useCallback((index: number, ratio: number) => {
     ratios.current[index] = ratio;
   }, []);
-
   const getRatio = useCallback((index: number) => {
     return ratios.current[index];
   }, []);
@@ -58,35 +71,51 @@ export const ComicReader = ({ chapters, id, index }: ComicReaderProps) => {
   // prefetch images
   const { isLoading, isError, error } = useQuery({
     queryKey: ["comicImages", id, index],
-    queryFn: () => prefetchImages(imageURLs),
-    enabled: imageURLs.length > 0,
+    queryFn: () => prefetchImages(showImages.map((s) => s.url)),
+    enabled: showImages.length > 0,
   });
 
   const loadNextChapter = () => {
-    if (curIndex < chapters.length - 1) {
-      const next = getAbsoluteImageURLs(chapters[curIndex + 1].imageList);
-      setCurIndex(curIndex + 1);
-      setImageURLs(imageURLs.concat(next));
+    if (nextIndex < chapters.length - 1) {
+      const next = getShowImages(chapters, index + 1);
+      setNextIndex(nextIndex + 1);
+      setShowImages(showImages.concat(next));
     }
   };
-
   const onEndReached = () => {
     loadNextChapter();
   };
 
+  // currentChapterIndex is the actually visible chapter
+  const currentChapterIndex = useRef<number>(index);
+  const viewConfigRef = useRef({
+    itemVisiblePercentThreshold: 50,
+  });
+  const onViewRef = useRef(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      if (
+        viewableItems.length > 0 &&
+        viewableItems[0].item.chapterIndex !== currentChapterIndex
+      ) {
+        currentChapterIndex.current = viewableItems[0].item.chapterIndex;
+        onUpdateChapter?.(currentChapterIndex.current);
+      }
+    }
+  );
+
   // fadeIn once loaded
   useEffect(() => {
-    if (!isLoading && !isError && imageURLs.length > 0) {
+    if (!isLoading && !isError && showImages.length > 0) {
       opacity.value = withTiming(1, { duration: 250 });
     }
-  }, [isLoading, isError, opacity, imageURLs.length]);
+  }, [isLoading, isError, opacity, showImages.length]);
 
   // ensure imageURLs is consistent with chatpers[index]
   useEffect(() => {
-    if (_imageURLs.length > imageURLs.length) {
-      setImageURLs(_imageURLs);
+    if (initShowImages.length > showImages.length) {
+      setShowImages(initShowImages);
     }
-  }, [_imageURLs, imageURLs]);
+  }, [initShowImages, showImages]);
 
   if (isLoading) {
     return <Loading />;
@@ -100,11 +129,11 @@ export const ComicReader = ({ chapters, id, index }: ComicReaderProps) => {
     <GestureDetector gesture={gesture}>
       <Animated.View style={[styles.zoomContainer, fadeInStyle, animatedStyle]}>
         <FlatList
-          data={imageURLs}
-          keyExtractor={(item) => item}
+          data={showImages}
+          keyExtractor={(item) => item.key}
           renderItem={({ item, index }) => (
             <ComicImage
-              uri={item}
+              uri={item.url}
               index={index}
               getRatio={getRatio}
               setRatio={setRatio}
@@ -113,8 +142,10 @@ export const ComicReader = ({ chapters, id, index }: ComicReaderProps) => {
           )}
           onEndReached={onEndReached}
           onEndReachedThreshold={4}
+          onScrollBeginDrag={onScrollBeginDrag}
+          onViewableItemsChanged={onViewRef.current}
+          viewabilityConfig={viewConfigRef.current}
           contentContainerStyle={styles.contentContainer}
-          // showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           initialNumToRender={7}
           maxToRenderPerBatch={14}
@@ -128,13 +159,9 @@ export const ComicReader = ({ chapters, id, index }: ComicReaderProps) => {
 };
 
 const styles = StyleSheet.create({
-  zoomContainer: {
-    // flex: 1,
-  },
-  contentContainer: {
-    // alignItems: "center",
-    // paddingVertical: 10,
-    // gap: 10,
-  },
+  zoomContainer: {},
+  contentContainer: {},
   image: {},
 });
+
+export default memo(ComicReader);

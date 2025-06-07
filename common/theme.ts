@@ -1,5 +1,4 @@
-import { Theme } from "@react-navigation/native";
-import { fonts } from "@react-navigation/native/src/theming/fonts";
+import { Theme, DefaultTheme as RNTheme } from "@react-navigation/native";
 
 export const tintColorLight = "#0a7ea4";
 export const tintColorDark = "#fff";
@@ -35,7 +34,7 @@ export const DarkTheme: Theme = {
     border: "rgb(39, 39, 41)",
     notification: "rgb(255, 69, 58)",
   },
-  fonts,
+  fonts: RNTheme.fonts,
 };
 
 export const DefaultTheme: Theme = {
@@ -48,5 +47,5 @@ export const DefaultTheme: Theme = {
     border: "rgb(216, 216, 216)",
     notification: "rgb(255, 59, 48)",
   },
-  fonts,
+  fonts: RNTheme.fonts,
 };

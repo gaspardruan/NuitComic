@@ -4,6 +4,7 @@ import {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
+  clamp,
 } from "react-native-reanimated";
 
 const { width: containerWidth, height: containterHeight } =
@@ -34,7 +35,7 @@ export const useZoomPan = ({
       }
     })
     .onEnd((e) => {
-      const clamped = Math.max(minScale, Math.min(scale.value, maxScale));
+      const clamped = clamp(scale.value, minScale, maxScale);
       scale.value = withTiming(clamped, { duration: 200 });
       savedScale.value = clamped;
       savedTranslateX.value = translateX.value;
@@ -54,8 +55,8 @@ export const useZoomPan = ({
       const nextX = savedTranslateX.value + e.translationX;
       const nextY = savedTranslateY.value + e.translationY;
 
-      translateX.value = Math.max(-maxX, Math.min(nextX, maxX));
-      translateY.value = Math.max(-maxY, Math.min(nextY, maxY));
+      translateX.value = clamp(nextX, -maxX, maxX);
+      translateY.value = clamp(nextY, -maxY, maxY);
     })
     .onEnd(() => {
       savedTranslateX.value = translateX.value;
@@ -86,7 +87,7 @@ export const useZoomPan = ({
       }
     });
 
-  const gesture = Gesture.Simultaneous(
+  const zoomPanGesture = Gesture.Simultaneous(
     Gesture.Native(),
     Gesture.Race(doubleTap, pinch, pan)
   );
@@ -99,5 +100,5 @@ export const useZoomPan = ({
     ],
   }));
 
-  return { gesture, animatedStyle };
+  return { zoomPanGesture, animatedStyle };
 };

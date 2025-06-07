@@ -29,3 +29,10 @@ export interface ComicChapter {
   createTime: string;
   imageList: string[];
 }
+
+export interface ShowImage {
+  key: string;
+  url: string;
+  indexInChapter: number;
+  chapterIndex: number;
+}
