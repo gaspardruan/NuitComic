@@ -5,6 +5,7 @@ import {
   useAnimatedStyle,
   withTiming,
   clamp,
+  runOnJS,
 } from "react-native-reanimated";
 
 const { width: containerWidth, height: containterHeight } =
@@ -13,9 +14,11 @@ const { width: containerWidth, height: containterHeight } =
 export const useZoomPan = ({
   minScale = 1,
   maxScale = 3,
+  onTap,
 }: {
   minScale?: number;
   maxScale?: number;
+  onTap?: () => void;
 }) => {
   const scale = useSharedValue(1);
   const savedScale = useSharedValue(1);
@@ -66,6 +69,7 @@ export const useZoomPan = ({
 
   const doubleTap = Gesture.Tap()
     .numberOfTaps(2)
+    .maxDistance(50)
     .onEnd(() => {
       if (scale.value === 1) {
         scale.value = withTiming(2, { duration: 200 });
@@ -87,9 +91,17 @@ export const useZoomPan = ({
       }
     });
 
-  const zoomPanGesture = Gesture.Simultaneous(
+  const tap = Gesture.Tap()
+    .numberOfTaps(1)
+    .onEnd(() => {
+      if (onTap) {
+        runOnJS(onTap)();
+      }
+    });
+
+  const gesture = Gesture.Simultaneous(
     Gesture.Native(),
-    Gesture.Race(doubleTap, pinch, pan)
+    Gesture.Race(Gesture.Exclusive(doubleTap, tap), pinch, pan)
   );
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -100,5 +112,5 @@ export const useZoomPan = ({
     ],
   }));
 
-  return { zoomPanGesture, animatedStyle };
+  return { gesture, animatedStyle };
 };

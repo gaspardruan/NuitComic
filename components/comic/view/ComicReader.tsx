@@ -44,16 +44,11 @@ const ComicReader = ({
   // nextIndex is the recently loaded chpater index, always increments
   const [nextIndex, setNextIndex] = useState<number>(index);
 
-  const { zoomPanGesture, animatedStyle } = useZoomPan({
+  const { gesture, animatedStyle } = useZoomPan({
     minScale: 1,
     maxScale: 3,
+    onTap,
   });
-  const tapGesture = Gesture.Tap().onEnd(() => {
-    if (onTap) {
-      runOnJS(onTap)();
-    }
-  });
-  const gesture = Gesture.Race(tapGesture, zoomPanGesture);
 
   // opacity is transition from loading to loaded
   const { opacity, fadeInStyle } = useFadeIn();
@@ -77,7 +72,7 @@ const ComicReader = ({
 
   const loadNextChapter = () => {
     if (nextIndex < chapters.length - 1) {
-      const next = getShowImages(chapters, index + 1);
+      const next = getShowImages(chapters, nextIndex + 1);
       setNextIndex(nextIndex + 1);
       setShowImages(showImages.concat(next));
     }
