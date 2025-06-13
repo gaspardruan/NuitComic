@@ -24,9 +24,7 @@ export default function TabLayout() {
         name="home"
         options={{
           title: "主页",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol name="house.fill" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <IconSymbol name="house.fill" color={color} />,
         }}
       />
       <Tabs.Screen

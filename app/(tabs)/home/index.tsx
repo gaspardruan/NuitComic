@@ -10,7 +10,8 @@ import { router, Stack } from "expo-router";
 import { StyleSheet, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
-import { YOffset } from "@/common/constant";
+import { HorizontalGap, ReduntantBottomHeight, YOffset } from "@/common/constant";
+import { useUIStore } from "@/state/ui";
 
 export default function HomeScreen() {
   const headerHeight = useHeaderHeight();
@@ -20,6 +21,9 @@ export default function HomeScreen() {
   const [showHeader, onScroll] = useScrollOffset(scrollThreshold);
 
   const textColor = useThemeColor("text");
+
+  const setHeaderHeight = useUIStore((state) => state.setHeaderHeight);
+  setHeaderHeight(headerHeight);
 
   const { data: comics } = useQuery({
     queryKey: ["home"],
@@ -94,8 +98,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     gap: 32,
-    paddingBottom: 100,
-    paddingHorizontal: 20,
+    paddingBottom: ReduntantBottomHeight,
+    paddingHorizontal: HorizontalGap,
   },
   title: {
     marginTop: -YOffset,

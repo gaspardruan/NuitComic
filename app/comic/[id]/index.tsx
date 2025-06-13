@@ -24,7 +24,13 @@ import ThemedText from "@/components/ThemedText";
 import { useScrollOffset } from "@/hooks/useScrollOffset";
 import { BottomBar } from "@/components/comic/bottom-bar/BottomBar";
 import ReadButton from "@/components/comic/bottom-bar/ReadButton";
-import { HorizontalGap, SectionGap, TitleHeight, TopGap } from "@/common/constant";
+import {
+  HorizontalGap,
+  ReduntantBottomHeight,
+  SectionGap,
+  TitleHeight,
+  TopGap,
+} from "@/common/constant";
 
 export default function ComicDetail() {
   const { id, title, cover, image, score, view, keyword, desc, author, updateTime, isOver } =
@@ -148,7 +154,7 @@ const styles = StyleSheet.create({
   },
   guessLike: {
     paddingTop: SectionGap,
-    paddingBottom: 100,
+    paddingBottom: ReduntantBottomHeight,
     paddingHorizontal: HorizontalGap,
     marginHorizontal: -HorizontalGap,
   },
