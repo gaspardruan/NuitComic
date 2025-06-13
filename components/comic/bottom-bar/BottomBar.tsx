@@ -1,7 +1,7 @@
 import { PropsWithChildren, createElement } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import BlurTabBarBackground from "../tab/TabBarBackground.ios";
+import BlurTabBarBackground from "@/components/tab/TabBarBackground.ios";
 
 type BottomBarProps = PropsWithChildren<{
   containerStyle?: StyleProp<ViewStyle>;

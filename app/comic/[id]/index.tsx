@@ -22,7 +22,7 @@ import GuessLike from "@/components/GuessLike";
 import { IconSymbol } from "@/components/icon/IconSymbol";
 import ThemedText from "@/components/ThemedText";
 import { useScrollOffset } from "@/hooks/useScrollOffset";
-import { BottomBar } from "@/components/comic/BottomBar";
+import { BottomBar } from "@/components/comic/bottom-bar/BottomBar";
 
 const topGap = 4;
 const sectionGap = 20;
