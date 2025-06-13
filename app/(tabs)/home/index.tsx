@@ -10,14 +10,13 @@ import { router, Stack } from "expo-router";
 import { StyleSheet, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
-
-const yOffset = 24;
+import { YOffset } from "@/common/constant";
 
 export default function HomeScreen() {
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
 
-  const scrollThreshold = headerHeight - insets.top - yOffset;
+  const scrollThreshold = headerHeight - insets.top - YOffset;
   const [showHeader, onScroll] = useScrollOffset(scrollThreshold);
 
   const textColor = useThemeColor("text");
@@ -99,6 +98,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    marginTop: -yOffset,
+    marginTop: -YOffset,
   },
 });

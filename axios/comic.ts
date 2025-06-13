@@ -5,8 +5,7 @@ import axios from "axios";
 const pageSize = 20;
 
 axios.defaults.baseURL = "https://yymh.app/home/api";
-axios.defaults.headers.post["Content-Type"] =
-  "application/x-www-form-urlencoded";
+axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 axios.defaults.timeout = 5000;
 
 axios.interceptors.request.use((request) => {
@@ -43,8 +42,7 @@ const _get = async (url: string): Promise<[Comic[], boolean]> => {
   return [[], true];
 };
 
-export const getBannerComic = async () =>
-  await _post("/getbanner.html", { type: 1, limit: 5 });
+export const getBannerComic = async () => await _post("/getbanner.html", { type: 1, limit: 5 });
 
 export const getUpdatedComic = async () =>
   await _post("/getbook.html", {
@@ -62,9 +60,7 @@ export const getMostViewComic = async (start = 0, limit = 6) =>
     order: "view desc",
   });
 
-export const getMostViewComicByPage = async (
-  page = 1
-): Promise<[Comic[], boolean]> => {
+export const getMostViewComicByPage = async (page = 1): Promise<[Comic[], boolean]> => {
   const start = (page - 1) * pageSize;
   return [await getMostViewComic(start, pageSize), false];
 };
@@ -77,9 +73,7 @@ export const getMostFollowComic = async (start = 0, limit = 6) =>
     order: "mark desc",
   });
 
-export const getMostFollowComicByPage = async (
-  page = 1
-): Promise<[Comic[], boolean]> => {
+export const getMostFollowComicByPage = async (page = 1): Promise<[Comic[], boolean]> => {
   const start = (page - 1) * pageSize;
   return [await getMostFollowComic(start, pageSize), false];
 };
@@ -93,9 +87,7 @@ export const getMostViewOverComic = async (start = 0, limit = 6) =>
     order: "view desc",
   });
 
-export const getMostViewOverComicByPage = async (
-  page = 1
-): Promise<[Comic[], boolean]> => {
+export const getMostViewOverComicByPage = async (page = 1): Promise<[Comic[], boolean]> => {
   const start = (page - 1) * pageSize;
   return [await getMostViewOverComic(start, pageSize), false];
 };
@@ -111,16 +103,14 @@ export const getNewComic = async (start = 0, limit = 6) =>
 export const getRandomComic = async () =>
   await _post("/getbook.html", { type: 1, limit: 6, fz: 2 });
 
-export const getGuessLikeComic = async () =>
-  await _post("/getcnxh.html", { type: 1, limit: 6 });
+export const getGuessLikeComic = async () => await _post("/getcnxh.html", { type: 1, limit: 6 });
 
-export const getUpdatedComicByPage = async (page = 1) =>
-  await _get(`/cate/tp/1-0-0-1-${page}`);
+export const getUpdatedComicByPage = async (page = 1) => await _get(`/cate/tp/1-0-0-1-${page}`);
 
 export const getRecommendComicByPage = async (page = 1) =>
   await _get(`/getpage/tp/1-recommend-${page}`);
 
-export const getNewComicByPage = async (page = 1) => {
+export const getNewComicByPage = async (page = 1): Promise<[Comic[], boolean]> => {
   const start = (page - 1) * pageSize;
   return [await getNewComic(start, pageSize), false];
 };
@@ -195,9 +185,7 @@ export const getComicChapterNum = async (id: string) => {
   return 0;
 };
 
-export const getComicAllChapter = async (
-  id: number
-): Promise<ComicChapter[]> => {
+export const getComicAllChapter = async (id: number): Promise<ComicChapter[]> => {
   try {
     const res = await axios.get(`/chapter_list/tp/${id}-1-1-1000`);
     const chapters = res.data.result.list;

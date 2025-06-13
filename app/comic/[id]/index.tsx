@@ -24,44 +24,29 @@ import ThemedText from "@/components/ThemedText";
 import { useScrollOffset } from "@/hooks/useScrollOffset";
 import { BottomBar } from "@/components/comic/bottom-bar/BottomBar";
 import ReadButton from "@/components/comic/bottom-bar/ReadButton";
-
-const topGap = 4;
-const sectionGap = 20;
-const horizontalGap = 20;
-const titleHeight = 24;
+import { HorizontalGap, SectionGap, TitleHeight, TopGap } from "@/common/constant";
 
 export default function ComicDetail() {
-  const {
-    id,
-    title,
-    cover,
-    image,
-    score,
-    view,
-    keyword,
-    desc,
-    author,
-    updateTime,
-    isOver,
-  } = useLocalSearchParams<{
-    id: string;
-    title: string;
-    cover: string;
-    image: string;
-    score: string;
-    view: string;
-    keyword: string;
-    desc: string;
-    author: string;
-    updateTime: string;
-    isOver: string;
-  }>();
+  const { id, title, cover, image, score, view, keyword, desc, author, updateTime, isOver } =
+    useLocalSearchParams<{
+      id: string;
+      title: string;
+      cover: string;
+      image: string;
+      score: string;
+      view: string;
+      keyword: string;
+      desc: string;
+      author: string;
+      updateTime: string;
+      isOver: string;
+    }>();
   const idInt = Number(id);
 
   // Heaer
   const headerHeight = useHeaderHeight();
   const [textY, setTextY] = useState(0);
-  const [showHeader, onScrollForHeader] = useScrollOffset(topGap);
+  const [showHeader, onScrollForHeader] = useScrollOffset(TopGap);
   const [showTitle, onScrollForTitle] = useScrollOffset(textY - headerHeight);
 
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -74,7 +59,7 @@ export default function ComicDetail() {
     // y is relative to the parent and not including padding.
     // That's to say, y of the first child in the parent is always 0.
     const { y } = e.nativeEvent.layout;
-    setTextY(headerHeight + topGap + y + sectionGap + titleHeight);
+    setTextY(headerHeight + TopGap + y + SectionGap + TitleHeight);
   };
 
   return (
@@ -100,8 +85,8 @@ export default function ComicDetail() {
       />
       <ScrollView
         style={{
-          paddingTop: headerHeight + topGap,
-          paddingHorizontal: horizontalGap,
+          paddingTop: headerHeight + TopGap,
+          paddingHorizontal: HorizontalGap,
         }}
         onScroll={onScroll}
         showsVerticalScrollIndicator={false}
@@ -134,7 +119,7 @@ export default function ComicDetail() {
         <View style={styles.buttonGroup}>
           <TouchableOpacity
             activeOpacity={0.5}
-            style={[styles.bottomButton, { marginRight: horizontalGap / 2 }]}
+            style={[styles.bottomButton, { marginRight: HorizontalGap / 2 }]}
           >
             <ThemedText type="defaultLight">收藏</ThemedText>
           </TouchableOpacity>
@@ -150,7 +135,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   details: {
-    paddingVertical: sectionGap,
+    paddingVertical: SectionGap,
     gap: 16,
   },
   detailsHeader: {
@@ -162,10 +147,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   guessLike: {
-    paddingTop: sectionGap,
+    paddingTop: SectionGap,
     paddingBottom: 100,
-    paddingHorizontal: horizontalGap,
-    marginHorizontal: -horizontalGap,
+    paddingHorizontal: HorizontalGap,
+    marginHorizontal: -HorizontalGap,
   },
   buttonGroup: {
     height: "100%",
@@ -173,7 +158,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingTop: 10,
-    marginHorizontal: horizontalGap,
+    marginHorizontal: HorizontalGap,
   },
   bottomButton: {
     flex: 1,
