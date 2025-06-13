@@ -23,6 +23,7 @@ import { IconSymbol } from "@/components/icon/IconSymbol";
 import ThemedText from "@/components/ThemedText";
 import { useScrollOffset } from "@/hooks/useScrollOffset";
 import { BottomBar } from "@/components/comic/bottom-bar/BottomBar";
+import ReadButton from "@/components/comic/bottom-bar/ReadButton";
 
 const topGap = 4;
 const sectionGap = 20;
@@ -137,12 +138,7 @@ export default function ComicDetail() {
           >
             <ThemedText type="defaultLight">收藏</ThemedText>
           </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={[styles.bottomButton, { marginLeft: horizontalGap / 2 }]}
-          >
-            <ThemedText type="defaultLight">开始阅读</ThemedText>
-          </TouchableOpacity>
+          <ReadButton id={idInt} />
         </View>
       </BottomBar>
     </>

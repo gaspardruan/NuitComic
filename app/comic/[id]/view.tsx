@@ -4,6 +4,7 @@ import { shortTitle } from "@/common/util";
 import ComicReader from "@/components/comic/view/ComicReader";
 import ThemedText from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { useReadStore } from "@/state/read";
 import { useQuery } from "@tanstack/react-query";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -14,8 +15,10 @@ export default function ComicView() {
   const idInt = Number(id);
   const chapterIndex = Number(index);
 
+  const newRead = useReadStore((state) => state.newRead);
+
   const { data } = useQuery({
-    queryKey: ["comic", id],
+    queryKey: ["comic", idInt],
     queryFn: async () => getComicAllChapter(idInt),
   });
   const chapters = useMemo(() => data ?? [], [data]);
@@ -25,10 +28,11 @@ export default function ComicView() {
   const backgroundColor = useThemeColor("background");
 
   const handleUpdateChapter = useCallback(
-    (chapterIndex: number) => {
-      setTitle(chapters[chapterIndex].title);
+    (newChapterIndex: number) => {
+      setTitle(chapters[newChapterIndex].title);
+      newRead(idInt, newChapterIndex);
     },
-    [chapters]
+    [chapters, idInt, newRead]
   );
 
   const handleTap = useCallback(() => {

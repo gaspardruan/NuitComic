@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, { runOnJS, withTiming } from "react-native-reanimated";
+import { GestureDetector } from "react-native-gesture-handler";
+import Animated, { withTiming } from "react-native-reanimated";
 import { FlatList, StyleSheet, ViewToken } from "react-native";
 import { Image } from "expo-image";
 import { useQuery } from "@tanstack/react-query";
@@ -86,16 +86,14 @@ const ComicReader = ({
   const viewConfigRef = useRef({
     itemVisiblePercentThreshold: 50,
   });
-  const onViewRef = useRef(
+  const onViewChange = useCallback(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
-      if (
-        viewableItems.length > 0 &&
-        viewableItems[0].item.chapterIndex !== currentChapterIndex
-      ) {
+      if (viewableItems.length > 0 && viewableItems[0].item.chapterIndex !== currentChapterIndex) {
         currentChapterIndex.current = viewableItems[0].item.chapterIndex;
         onUpdateChapter?.(currentChapterIndex.current);
       }
-    }
+    },
+    [onUpdateChapter]
   );
 
   // fadeIn once loaded
@@ -105,7 +103,7 @@ const ComicReader = ({
     }
   }, [isLoading, isError, opacity, showImages.length]);
 
-  // ensure imageURLs is consistent with chatpers[index]
+  // ensure showImages is consistent with chatpers[index]
   useEffect(() => {
     if (initShowImages.length > showImages.length) {
       setShowImages(initShowImages);
@@ -138,10 +136,11 @@ const ComicReader = ({
           onEndReached={onEndReached}
           onEndReachedThreshold={4}
           onScrollBeginDrag={onScrollBeginDrag}
-          onViewableItemsChanged={onViewRef.current}
+          onViewableItemsChanged={onViewChange}
           viewabilityConfig={viewConfigRef.current}
           contentContainerStyle={styles.contentContainer}
           showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           initialNumToRender={7}
           maxToRenderPerBatch={14}
           windowSize={15}
