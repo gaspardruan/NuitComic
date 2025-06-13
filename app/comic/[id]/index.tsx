@@ -55,6 +55,8 @@ export default function ComicDetail() {
     updateTime: string;
     isOver: string;
   }>();
+  const idInt = Number(id);
+
   // Heaer
   const headerHeight = useHeaderHeight();
   const [textY, setTextY] = useState(0);
@@ -121,7 +123,7 @@ export default function ComicDetail() {
 
           <ComicDesc desc={desc} />
 
-          <ContentBar id={id} updateTime={updateTime} isOver={isOver} />
+          <ContentBar id={idInt} updateTime={updateTime} isOver={isOver} />
         </View>
 
         {/* More */}

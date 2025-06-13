@@ -11,11 +11,12 @@ import { View } from "react-native";
 
 export default function ComicView() {
   const { id, index } = useLocalSearchParams<{ id: string; index: string }>();
+  const idInt = Number(id);
   const chapterIndex = Number(index);
 
   const { data } = useQuery({
     queryKey: ["comic", id],
-    queryFn: async () => getComicAllChapter(id),
+    queryFn: async () => getComicAllChapter(idInt),
   });
   const chapters = useMemo(() => data ?? [], [data]);
 

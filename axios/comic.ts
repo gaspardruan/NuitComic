@@ -196,7 +196,7 @@ export const getComicChapterNum = async (id: string) => {
 };
 
 export const getComicAllChapter = async (
-  id: string
+  id: number
 ): Promise<ComicChapter[]> => {
   try {
     const res = await axios.get(`/chapter_list/tp/${id}-1-1-1000`);

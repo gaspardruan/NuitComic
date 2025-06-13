@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ContentModal } from "./ContentModal";
 
 type ContentRowProps = {
-  id: string;
+  id: number;
   updateTime: string;
   isOver: string;
 };
