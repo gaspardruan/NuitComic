@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet } from "react-native";
-import ThemedText from "../ThemedText";
+import ThemedText from "@/components/ThemedText";
 import { formatKeyword } from "@/common/util";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { memo } from "react";

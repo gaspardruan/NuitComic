@@ -12,12 +12,12 @@ import {
 } from "react-native";
 
 import { tintColorLight } from "@/common/theme";
-import AutoSizedImage from "@/components/comic/AutoSizeCover";
-import ComicDesc from "@/components/comic/ComicDesc";
+import AutoSizedImage from "@/components/comic/detail/AutoSizeCover";
+import ComicDesc from "@/components/comic/detail/ComicDesc";
 import ContentBar from "@/components/comic/content/ContentBar";
-import RatingRow from "@/components/comic/RatingRow";
-import TagRow from "@/components/comic/TagRow";
-import ViewNum from "@/components/comic/ViewNum";
+import RatingRow from "@/components/comic/detail/RatingRow";
+import TagRow from "@/components/comic/detail/TagRow";
+import ViewNum from "@/components/comic/detail/ViewNum";
 import GuessLike from "@/components/GuessLike";
 import { IconSymbol } from "@/components/icon/IconSymbol";
 import ThemedText from "@/components/ThemedText";

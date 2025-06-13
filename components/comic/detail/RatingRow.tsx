@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import ThemedText from "../ThemedText";
+import ThemedText from "@/components/ThemedText";
 import { Rating } from "react-native-ratings";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { memo } from "react";

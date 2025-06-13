@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import ThemedText from "../ThemedText";
+import ThemedText from "@/components/ThemedText";
 import { formatNumber } from "@/common/util";
 import { memo } from "react";
 

@@ -7,8 +7,8 @@ import {
   ViewStyle,
 } from "react-native";
 import ReadMore from "react-native-read-more-text";
-import { IconSymbol } from "../icon/IconSymbol";
-import ThemedText from "../ThemedText";
+import { IconSymbol } from "@/components/icon/IconSymbol";
+import ThemedText from "@/components/ThemedText";
 import { memo } from "react";
 
 type ComicDescProps = {
