@@ -8,7 +8,6 @@ import {
   NativeScrollEvent,
   LayoutChangeEvent,
   StyleSheet,
-  TouchableOpacity,
 } from "react-native";
 
 import { tintColorLight } from "@/common/theme";
@@ -31,6 +30,7 @@ import {
   TitleHeight,
   TopGap,
 } from "@/common/constant";
+import CollectButton from "@/components/comic/bottom-bar/CollectButton";
 
 export default function ComicDetail() {
   const { id, title, cover, image, score, view, keyword, desc, author, updateTime, isOver } =
@@ -123,12 +123,7 @@ export default function ComicDetail() {
       </ScrollView>
       <BottomBar>
         <View style={styles.buttonGroup}>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={[styles.bottomButton, { marginRight: HorizontalGap / 2 }]}
-          >
-            <ThemedText type="defaultLight">收藏</ThemedText>
-          </TouchableOpacity>
+          <CollectButton id={idInt} />
           <ReadButton id={idInt} />
         </View>
       </BottomBar>

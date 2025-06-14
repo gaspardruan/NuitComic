@@ -1,15 +1,24 @@
-import { Comic } from "@/common/interface";
-import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
+import { Link } from "expo-router";
 import { Image } from "expo-image";
 import ThemedText from "@/components/ThemedText";
-import { formatSliceKeyword } from "@/common/util";
+import { Comic } from "@/common/interface";
+import { useQuery } from "@tanstack/react-query";
+import { getComicChapterNum } from "@/axios/comic";
 
-type ComicCoverProps = {
+type ComicReadCoverProps = {
   comic: Comic;
+  lastRead: number;
 };
 
-export function ComicCover({ comic }: ComicCoverProps) {
+export function ComicReadCover({ comic, lastRead }: ComicReadCoverProps) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["chapterNum", comic.id],
+    queryFn: async () => getComicChapterNum(comic.id),
+  });
+
+  const total = data ?? 0;
+
   return (
     <Link
       href={{
@@ -38,12 +47,15 @@ export function ComicCover({ comic }: ComicCoverProps) {
           }}
           style={styles.container}
           placeholderContentFit="contain"
+          transition={100}
         />
         <View>
           <ThemedText type="default" numberOfLines={1} ellipsizeMode="tail">
             {comic.title}
           </ThemedText>
-          <ThemedText type="tag">{formatSliceKeyword(comic.keyword)}</ThemedText>
+          <ThemedText type="tag">
+            {lastRead + 1}话/{isLoading ? "-" : total}话{comic.isOver === "1" ? "(完结)" : ""}
+          </ThemedText>
         </View>
       </View>
     </Link>

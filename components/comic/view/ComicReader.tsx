@@ -88,7 +88,10 @@ const ComicReader = ({
   });
   const onViewChange = useCallback(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
-      if (viewableItems.length > 0 && viewableItems[0].item.chapterIndex !== currentChapterIndex) {
+      if (
+        viewableItems.length > 0 &&
+        viewableItems[0].item.chapterIndex !== currentChapterIndex.current
+      ) {
         currentChapterIndex.current = viewableItems[0].item.chapterIndex;
         onUpdateChapter?.(currentChapterIndex.current);
       }

@@ -8,3 +8,5 @@ export const SectionGap = 20;
 export const TitleHeight = 24;
 
 export const ReduntantBottomHeight = 100;
+
+export const MaxRencentlyRead = 50;

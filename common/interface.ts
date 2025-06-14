@@ -10,7 +10,7 @@ export interface Comic {
   follow: string;
   keyword: string;
   updateTime: string;
-  isOver: string; // 1: over, 0: not over
+  isOver: string; // "1" for over, "0" for ongoing
 }
 
 export interface IndexComicData {

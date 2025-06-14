@@ -178,7 +178,7 @@ export const getIndexData = async (): Promise<IndexComicData> => {
 export const getComicChapterNum = async (id: string) => {
   try {
     const res = await axios.get(`/chapter_list/tp/${id}-1-1-1`);
-    return res.data.result.totalRow;
+    return Number(res.data.result.totalRow);
   } catch (error) {
     logError(error);
   }
@@ -196,6 +196,11 @@ export const getComicAllChapter = async (id: number): Promise<ComicChapter[]> =>
   }
   return [];
 };
+
+export const getAllComic = async (): Promise<Comic[]> =>
+  await _post("/getbook.html", {
+    order: "id",
+  });
 
 const refineComic = (comics: any) => {
   // 若 comics 为数组

@@ -1,15 +1,9 @@
 import { Comic } from "@/common/interface";
-import { IconSymbol, IconSymbolName } from "./icon/IconSymbol";
-import {
-  StyleProp,
-  View,
-  ViewStyle,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-import ThemedText from "./ThemedText";
+import { IconSymbol, IconSymbolName } from "@/components/icon/IconSymbol";
+import { StyleProp, View, ViewStyle, StyleSheet, TouchableOpacity } from "react-native";
+import ThemedText from "@/components/ThemedText";
 import { SimpleGrid } from "react-native-super-grid";
-import { ComicCover } from "./home/ComicCover";
+import { ComicCover } from "@/components/home/ComicCover";
 
 type HomeSectionProps = {
   title: string;

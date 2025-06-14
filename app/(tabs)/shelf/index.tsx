@@ -1,18 +1,63 @@
-import { HorizontalGap, ReduntantBottomHeight, YOffset } from "@/common/constant";
-import { tintColorLight } from "@/common/theme";
-import ThemedText from "@/components/ThemedText";
-import { useUIStore } from "@/state/ui";
 import { useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { View, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import { useQuery } from "@tanstack/react-query";
+import { getAllComic } from "@/axios/comic";
+import { HorizontalGap, MaxRencentlyRead, ReduntantBottomHeight, YOffset } from "@/common/constant";
+import { Comic } from "@/common/interface";
+import { tintColorLight } from "@/common/theme";
+import { Loading } from "@/components/Loading";
+import { SimpleGrid } from "@/components/shelf/SimpleGrid";
+import ThemedText from "@/components/ThemedText";
+import { Error } from "@/components/Error";
+import { useReadStore } from "@/state/read";
+import { useUIStore } from "@/state/ui";
+import { ComicReadCover } from "@/components/shelf/ComicReadCover";
 
 const Gap = 8;
+const { width } = Dimensions.get("window");
+
+const getComicMap = async () => {
+  const comics = await getAllComic();
+  const comicMap = new Map<number, Comic>();
+  comics.forEach((comic) => {
+    comicMap.set(Number(comic.id), comic);
+  });
+  return comicMap;
+};
 
 export default function Home() {
   const headerHeight = useUIStore((state) => state.headerHeight);
   const top = headerHeight - YOffset;
 
+  const gridWidth = width - HorizontalGap * 2;
+
   const [activeTab, setActiveTab] = useState<number>(0);
+
+  const collections = Array.from(useReadStore((state) => state.collections));
+  const lastRead = useReadStore((state) => state.lastRead);
+  const recentRead = Array.from(lastRead.keys()).slice(-MaxRencentlyRead);
+
+  // why do I get all comics here?
+  // because I don't find the api to get comic by id.
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["allComics"],
+    queryFn: getComicMap,
+  });
+  const comicMap = data ?? new Map();
+  const collectionComics = comicMap.size === 0 ? [] : collections.map((id) => comicMap.get(id));
+  const recentlyReadComics = comicMap.size === 0 ? [] : recentRead.map((id) => comicMap.get(id));
+
+  const showData = activeTab === 0 ? collectionComics : recentlyReadComics;
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <Error error={error?.message} />;
+  }
+
+  console.log("Shelf render");
 
   return (
     <View style={[styles.container, { marginTop: top }]}>
@@ -31,40 +76,18 @@ export default function Home() {
           </ThemedText>
         </TouchableOpacity>
       </View>
-      <ScrollView
+
+      <SimpleGrid
+        key={activeTab}
+        data={showData}
+        totalWidth={gridWidth}
+        verticalGap={HorizontalGap}
+        horizontalGap={HorizontalGap}
         contentContainerStyle={styles.scrollContainer}
-        showsVerticalScrollIndicator={true}
-      >
-        {/* Placeholder for content */}
-        <ThemedText type="default">这里是书架内容</ThemedText>
-        <ThemedText type="default">可以添加漫画到书架</ThemedText>
-        <ThemedText type="default">管理你的漫画收藏</ThemedText>
-        <ThemedText type="default">查看阅读历史</ThemedText>
-        <ThemedText type="default">这里是书架内容</ThemedText>
-        <ThemedText type="default">可以添加漫画到书架</ThemedText>
-        <ThemedText type="default">管理你的漫画收藏</ThemedText>
-        <ThemedText type="default">查看阅读历史</ThemedText>
-        <ThemedText type="default">这里是书架内容</ThemedText>
-        <ThemedText type="default">可以添加漫画到书架</ThemedText>
-        <ThemedText type="default">管理你的漫画收藏</ThemedText>
-        <ThemedText type="default">查看阅读历史</ThemedText>
-        <ThemedText type="default">这里是书架内容</ThemedText>
-        <ThemedText type="default">可以添加漫画到书架</ThemedText>
-        <ThemedText type="default">管理你的漫画收藏</ThemedText>
-        <ThemedText type="default">查看阅读历史</ThemedText>
-        <ThemedText type="default">这里是书架内容</ThemedText>
-        <ThemedText type="default">可以添加漫画到书架</ThemedText>
-        <ThemedText type="default">管理你的漫画收藏</ThemedText>
-        <ThemedText type="default">查看阅读历史</ThemedText>
-        <ThemedText type="default">这里是书架内容</ThemedText>
-        <ThemedText type="default">可以添加漫画到书架</ThemedText>
-        <ThemedText type="default">管理你的漫画收藏</ThemedText>
-        <ThemedText type="default">查看阅读历史</ThemedText>
-        <ThemedText type="default">这里是书架内容</ThemedText>
-        <ThemedText type="default">可以添加漫画到书架</ThemedText>
-        <ThemedText type="default">管理你的漫画收藏</ThemedText>
-        <ThemedText type="default">查看阅读历史</ThemedText>
-      </ScrollView>
+        renderItem={(comic, index) => (
+          <ComicReadCover comic={comic} lastRead={lastRead.get(Number(comic.id)) ?? 0} />
+        )}
+      />
     </View>
   );
 }
@@ -72,8 +95,6 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-    // gap: 24,
   },
   title: {
     paddingHorizontal: HorizontalGap,

@@ -30,6 +30,8 @@ export default function HomeScreen() {
     queryFn: getIndexData,
   });
 
+  console.log("Home render");
+
   return (
     <>
       <Stack.Screen
