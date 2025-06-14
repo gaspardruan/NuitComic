@@ -25,7 +25,7 @@ const getComicMap = async () => {
   return comicMap;
 };
 
-export default function Home() {
+export default function ShelfScreen() {
   const headerHeight = useUIStore((state) => state.headerHeight);
   const top = headerHeight - YOffset;
 
