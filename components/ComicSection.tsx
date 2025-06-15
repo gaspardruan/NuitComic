@@ -4,6 +4,7 @@ import { StyleProp, View, ViewStyle, StyleSheet, TouchableOpacity } from "react-
 import ThemedText from "@/components/ThemedText";
 import { ComicCover } from "@/components/home/ComicCover";
 import { SimpleGrid } from "./shelf/SimpleGrid";
+import { SectionInnerGap } from "@/common/constant";
 
 type HomeSectionProps = {
   title: string;
@@ -13,8 +14,6 @@ type HomeSectionProps = {
   style?: StyleProp<ViewStyle>;
   totalWidth: number;
 };
-
-const space = 12;
 
 export function Section({
   title,
@@ -41,8 +40,8 @@ export function Section({
       <SimpleGrid
         data={comics}
         totalWidth={totalWidth}
-        verticalGap={space}
-        horizontalGap={space}
+        verticalGap={SectionInnerGap}
+        horizontalGap={SectionInnerGap}
         scrollEnabled={false}
         renderItem={(item) => <ComicCover comic={item} />}
       />
@@ -58,8 +57,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
-  },
-  simpleGrid: {
-    margin: -space,
   },
 });

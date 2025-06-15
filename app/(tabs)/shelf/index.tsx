@@ -1,8 +1,14 @@
 import { useState } from "react";
-import { View, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import { getAllComic } from "@/axios/comic";
-import { HorizontalGap, MaxRencentlyRead, ReduntantBottomHeight, YOffset } from "@/common/constant";
+import {
+  ContentWidth,
+  HorizontalGap,
+  MaxRencentlyRead,
+  ReduntantBottomHeight,
+  YOffset,
+} from "@/common/constant";
 import { Comic } from "@/common/interface";
 import { tintColorLight } from "@/common/theme";
 import { Loading } from "@/components/Loading";
@@ -15,7 +21,6 @@ import { ComicReadCover } from "@/components/shelf/ComicReadCover";
 import { Empty } from "@/components/Empty";
 
 const Gap = 8;
-const { width } = Dimensions.get("window");
 
 const getComicMap = async () => {
   const comics = await getAllComic();
@@ -29,8 +34,6 @@ const getComicMap = async () => {
 export default function ShelfScreen() {
   const headerHeight = useUIStore((state) => state.headerHeight);
   const top = headerHeight - YOffset;
-
-  const gridWidth = width - HorizontalGap * 2;
 
   const [activeTab, setActiveTab] = useState<number>(0);
 
@@ -82,7 +85,7 @@ export default function ShelfScreen() {
         <SimpleGrid
           key={activeTab}
           data={showData}
-          totalWidth={gridWidth}
+          totalWidth={ContentWidth}
           verticalGap={HorizontalGap}
           horizontalGap={HorizontalGap}
           contentContainerStyle={styles.scrollContainer}

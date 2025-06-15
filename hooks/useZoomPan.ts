@@ -1,4 +1,3 @@
-import { Dimensions } from "react-native";
 import { Gesture } from "react-native-gesture-handler";
 import {
   useSharedValue,
@@ -7,9 +6,7 @@ import {
   clamp,
   runOnJS,
 } from "react-native-reanimated";
-
-const { width: containerWidth, height: containterHeight } =
-  Dimensions.get("window");
+import { ClientHeight, ClientWidth } from "@/common/constant";
 
 export const useZoomPan = ({
   minScale = 1,
@@ -31,10 +28,8 @@ export const useZoomPan = ({
     .onUpdate((e) => {
       scale.value = savedScale.value * e.scale;
       if (e.scale < 1 && scale.value >= 1 && savedScale.value !== 1) {
-        translateX.value =
-          (savedTranslateX.value * (scale.value - 1)) / (savedScale.value - 1);
-        translateY.value =
-          (savedTranslateY.value * (scale.value - 1)) / (savedScale.value - 1);
+        translateX.value = (savedTranslateX.value * (scale.value - 1)) / (savedScale.value - 1);
+        translateY.value = (savedTranslateY.value * (scale.value - 1)) / (savedScale.value - 1);
       }
     })
     .onEnd((e) => {
@@ -49,11 +44,11 @@ export const useZoomPan = ({
     .onUpdate((e) => {
       const s = scale.value;
 
-      const scaledWidth = containerWidth * s;
-      const scaledHeight = containterHeight * s;
+      const scaledWidth = ClientWidth * s;
+      const scaledHeight = ClientHeight * s;
 
-      const maxX = (scaledWidth - containerWidth) / 2;
-      const maxY = (scaledHeight - containterHeight) / 2;
+      const maxX = (scaledWidth - ClientWidth) / 2;
+      const maxY = (scaledHeight - ClientHeight) / 2;
 
       const nextX = savedTranslateX.value + e.translationX;
       const nextY = savedTranslateY.value + e.translationY;

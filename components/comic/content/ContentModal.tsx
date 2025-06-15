@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Modal,
-  Animated,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View, Modal, Animated } from "react-native";
 
 import ThemedText from "../../ThemedText";
 import { ComicChapter } from "@/common/interface";
@@ -13,8 +6,8 @@ import { useEffect, useRef } from "react";
 import { IconSymbol } from "../../icon/IconSymbol";
 import { ChapterList } from "./ChapterList";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { ClientHeight } from "@/common/constant";
 
-const { height } = Dimensions.get("window");
 const inDuration = 450;
 const outDuration = 250;
 
@@ -28,13 +21,9 @@ type ContentModalProps = {
   onClose: () => void;
 };
 
-export const ContentModal = ({
-  isVisible,
-  onClose,
-  chapters,
-}: ContentModalProps) => {
+export const ContentModal = ({ isVisible, onClose, chapters }: ContentModalProps) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(height)).current;
+  const slideAnim = useRef(new Animated.Value(ClientHeight)).current;
 
   const backgroundColor = useThemeColor("background");
 
@@ -47,7 +36,7 @@ export const ContentModal = ({
         useNativeDriver: true,
       }),
       Animated.timing(slideAnim, {
-        toValue: height,
+        toValue: ClientHeight,
         duration: outDuration,
         useNativeDriver: true,
       }),
@@ -79,23 +68,13 @@ export const ContentModal = ({
     <>
       <Modal visible={isVisible} animationType="none" transparent={true}>
         <Animated.View style={[styles.modalBackground, { opacity: fadeAnim }]}>
-          <TouchableOpacity
-            style={[styles.fullScreenTouchable]}
-            onPress={handleClose}
-          />
+          <TouchableOpacity style={[styles.fullScreenTouchable]} onPress={handleClose} />
         </Animated.View>
 
-        <Animated.View
-          style={[
-            styles.modalWrapper,
-            { transform: [{ translateY: slideAnim }] },
-          ]}
-        >
+        <Animated.View style={[styles.modalWrapper, { transform: [{ translateY: slideAnim }] }]}>
           <View style={[styles.modalContent, { backgroundColor }]}>
             <View style={styles.titleContainer}>
-              <View
-                style={{ width: iconContentSize, height: iconContentSize }}
-              />
+              <View style={{ width: iconContentSize, height: iconContentSize }} />
               <ThemedText type="subtitle">目录</ThemedText>
               <TouchableOpacity
                 style={{ padding: iconPadding }}

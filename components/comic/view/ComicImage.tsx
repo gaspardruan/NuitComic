@@ -1,6 +1,7 @@
-import { Image, ImageStyle, useImage } from "expo-image";
 import { memo, useRef } from "react";
-import { StyleProp, Dimensions } from "react-native";
+import { StyleProp } from "react-native";
+import { Image, ImageStyle, useImage } from "expo-image";
+import { ScreenAspectRatio } from "@/common/constant";
 
 type ComicImageProps = {
   uri: string;
@@ -10,17 +11,7 @@ type ComicImageProps = {
   getRatio: (index: number) => number;
 };
 
-const { width, height } = Dimensions.get("window");
-
-const screenAspectRatio = width / height;
-
-const ComicImage = ({
-  uri,
-  getRatio,
-  setRatio,
-  index,
-  style,
-}: ComicImageProps) => {
+const ComicImage = ({ uri, getRatio, setRatio, index, style }: ComicImageProps) => {
   const retryCount = useRef<number>(0);
   const image = useImage(
     {
@@ -40,7 +31,7 @@ const ComicImage = ({
   );
 
   const lastRatio = getRatio(index);
-  let ratio = lastRatio ?? screenAspectRatio;
+  let ratio = lastRatio ?? ScreenAspectRatio;
   if (!lastRatio && image) {
     ratio = image.width / image.height;
     setRatio(index, ratio);
@@ -50,10 +41,7 @@ const ComicImage = ({
     <Image
       source={image}
       placeholder={require("@/assets/images/placeholder.png")}
-      style={[
-        { width: "100%", aspectRatio: ratio, backgroundColor: "rgb(1, 1, 1)" },
-        style,
-      ]}
+      style={[{ width: "100%", aspectRatio: ratio, backgroundColor: "rgb(1, 1, 1)" }, style]}
       placeholderContentFit="contain"
       transition={250}
     />
