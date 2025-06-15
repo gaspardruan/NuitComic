@@ -12,6 +12,7 @@ import { Error } from "@/components/Error";
 import { useReadStore } from "@/state/read";
 import { useUIStore } from "@/state/ui";
 import { ComicReadCover } from "@/components/shelf/ComicReadCover";
+import { Empty } from "@/components/Empty";
 
 const Gap = 8;
 const { width } = Dimensions.get("window");
@@ -48,6 +49,7 @@ export default function ShelfScreen() {
   const recentlyReadComics = comicMap.size === 0 ? [] : recentRead.map((id) => comicMap.get(id));
 
   const showData = activeTab === 0 ? collectionComics : recentlyReadComics;
+  const emptyMsg = activeTab === 0 ? "收藏的漫画会在这里显示" : "最近阅读的漫画会在这里显示";
 
   if (isLoading) {
     return <Loading />;
@@ -56,8 +58,6 @@ export default function ShelfScreen() {
   if (isError) {
     return <Error error={error?.message} />;
   }
-
-  console.log("Shelf render");
 
   return (
     <View style={[styles.container, { marginTop: top }]}>
@@ -76,18 +76,21 @@ export default function ShelfScreen() {
           </ThemedText>
         </TouchableOpacity>
       </View>
-
-      <SimpleGrid
-        key={activeTab}
-        data={showData}
-        totalWidth={gridWidth}
-        verticalGap={HorizontalGap}
-        horizontalGap={HorizontalGap}
-        contentContainerStyle={styles.scrollContainer}
-        renderItem={(comic, index) => (
-          <ComicReadCover comic={comic} lastRead={lastRead.get(Number(comic.id)) ?? 0} />
-        )}
-      />
+      {showData.length === 0 ? (
+        <Empty icon="book" msg={emptyMsg} />
+      ) : (
+        <SimpleGrid
+          key={activeTab}
+          data={showData}
+          totalWidth={gridWidth}
+          verticalGap={HorizontalGap}
+          horizontalGap={HorizontalGap}
+          contentContainerStyle={styles.scrollContainer}
+          renderItem={(comic, index) => (
+            <ComicReadCover comic={comic} lastRead={lastRead.get(Number(comic.id)) ?? 0} />
+          )}
+        />
+      )}
     </View>
   );
 }

@@ -22,6 +22,7 @@ const MAPPING = {
   "chevron.up": "keyboard-arrow-up",
   "chevron.down": "keyboard-arrow-down",
   xmark: "close",
+  book: "book",
 } as Partial<
   Record<
     import("expo-symbols").SymbolViewProps["name"],
@@ -51,7 +52,5 @@ export function IconSymbol({
 }) {
   const defaultIconColor = useThemeColor("icon");
   const c = color ?? defaultIconColor;
-  return (
-    <MaterialIcons color={c} size={size} name={MAPPING[name]} style={style} />
-  );
+  return <MaterialIcons color={c} size={size} name={MAPPING[name]} style={style} />;
 }

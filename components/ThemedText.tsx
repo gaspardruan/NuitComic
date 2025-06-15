@@ -18,7 +18,8 @@ export type ThemedTextProps = TextProps & {
     | "emphasis"
     | "defaultLight"
     | "small"
-    | "bold";
+    | "bold"
+    | "info";
 };
 
 const ThemedText = ({
@@ -49,6 +50,7 @@ const ThemedText = ({
         type === "defaultLight" ? styles.defaultLight : undefined,
         type === "small" ? styles.small : undefined,
         type === "bold" ? styles.bold : undefined,
+        type === "info" ? styles.info : undefined,
         style,
       ]}
       {...rest}
@@ -112,6 +114,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     fontWeight: "500",
+  },
+  info: {
+    fontSize: 18,
+    opacity: 0.8,
   },
 });
 
