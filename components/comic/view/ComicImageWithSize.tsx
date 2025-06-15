@@ -9,8 +9,6 @@ type ComicImageProps = {
 };
 
 const ComicImageWithSize = ({ uri, aspectRatio, style }: ComicImageProps) => {
-  console.log("ComicImageWithSize", uri);
-
   return (
     <Image
       source={{
@@ -18,10 +16,7 @@ const ComicImageWithSize = ({ uri, aspectRatio, style }: ComicImageProps) => {
         headers: { Referer: "https://yymh.app/" },
       }}
       placeholder={require("@/assets/images/placeholder.png")}
-      style={[
-        { width: "100%", aspectRatio, backgroundColor: "rgb(1, 1, 1)" },
-        style,
-      ]}
+      style={[{ width: "100%", aspectRatio, backgroundColor: "rgb(1, 1, 1)" }, style]}
       placeholderContentFit="contain"
     />
   );
