@@ -8,14 +8,14 @@ axios.defaults.baseURL = "https://yymh.app/home/api";
 axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 axios.defaults.timeout = 5000;
 
-// axios.interceptors.request.use((request) => {
-//   console.log("Request:", {
-//     method: request.method,
-//     url: request.url,
-//     data: request.data,
-//   });
-//   return request;
-// });
+axios.interceptors.request.use((request) => {
+  console.log("Request:", {
+    method: request.method,
+    url: request.url,
+    data: request.data,
+  });
+  return request;
+});
 
 const _post = async (url: string, data: any): Promise<Comic[]> => {
   try {
@@ -233,7 +233,15 @@ const refineChapter = (chapters: any) => {
     chapters.forEach((chapter) => {
       chapter.title = (chapter.title as string).trim();
       chapter.createTime = formatTimeToDate(chapter.create_time as string);
-      chapter.imageList = (chapter.imagelist as string).split(",");
+      let imageList = chapter.imagelist as string;
+      // 处理图片列表，去除首尾逗号
+      if (imageList.startsWith(",")) {
+        imageList = imageList.slice(1);
+      }
+      if (imageList.endsWith(",")) {
+        imageList = imageList.slice(0, -1);
+      }
+      chapter.imageList = imageList.split(",");
       // delete chapter.create_time;
       // delete chapter.imagelist;
     });

@@ -7,16 +7,12 @@ type AutoSizedImageProps = ImageProps & {
   fallbackUri: string;
 };
 
-const AutoSizedCover = ({
-  uri,
-  fallbackUri,
-  style,
-  ...rest
-}: AutoSizedImageProps) => {
+const AutoSizedCover = ({ uri, fallbackUri, style, ...rest }: AutoSizedImageProps) => {
   const [isError, setIsError] = useState(false);
   const onError = () => {
     if (!isError) {
       setIsError(true);
+      console.warn("Image loading failed, using fallback image.");
     }
   };
 
@@ -43,9 +39,20 @@ const AutoSizedCover = ({
     w = isWidthLarger ? "100%" : "39%";
   }
 
+  console.log(fallbackUri);
+  console.log(uri);
+  console.log(isError);
+
   return (
     <Image
-      source={isError ? fallbackUri : image}
+      source={
+        isError
+          ? {
+              uri: fallbackUri,
+              headers: { Referer: "https://yymh.app/" },
+            }
+          : image
+      }
       style={[
         {
           width: w,
