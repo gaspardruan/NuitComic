@@ -9,6 +9,7 @@ type SimpleGridProps<ItemT> = {
   verticalGap: number;
   horizontalGap: number;
   contentContainerStyle?: StyleProp<ViewStyle>;
+  scrollEnabled?: boolean;
   renderItem: (item: ItemT, index: number) => React.ReactElement;
 };
 
@@ -29,6 +30,7 @@ export const SimpleGrid = <ItemT,>({
   columnNum,
   verticalGap,
   horizontalGap,
+  scrollEnabled = true,
   contentContainerStyle,
   renderItem,
 }: SimpleGridProps<ItemT>) => {
@@ -44,7 +46,7 @@ export const SimpleGrid = <ItemT,>({
   return (
     <ScrollView
       contentContainerStyle={[{ gap: verticalGap }, contentContainerStyle]}
-      showsVerticalScrollIndicator={true}
+      scrollEnabled={scrollEnabled}
     >
       {rows.map((row, rowIndex) => (
         <View key={rowIndex} style={[styles.row, { gap: horizontalGap }]}>

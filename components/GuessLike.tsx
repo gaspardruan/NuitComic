@@ -8,12 +8,10 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 type GuessLikeProps = {
   useSecondaryBackground?: boolean;
   style?: StyleProp<ViewStyle>;
+  totalWidth: number;
 };
 
-export const GuessLike = ({
-  style,
-  useSecondaryBackground,
-}: GuessLikeProps) => {
+export const GuessLike = ({ style, useSecondaryBackground, totalWidth }: GuessLikeProps) => {
   const [guess, setGuess] = useState<Comic[]>([]);
   const [loading, setLoading] = useState(true);
   const guessLike = () => {
@@ -36,6 +34,7 @@ export const GuessLike = ({
       comics={guess}
       icon="arrow.trianglehead.2.clockwise"
       headerAction={guessLike}
+      totalWidth={totalWidth}
       style={[{ backgroundColor: bg, opacity: loading ? 0 : 1 }, style]}
     />
   );

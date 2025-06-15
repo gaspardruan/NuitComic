@@ -10,7 +10,7 @@ import { router, Stack } from "expo-router";
 import { StyleSheet, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
-import { HorizontalGap, ReduntantBottomHeight, YOffset } from "@/common/constant";
+import { ContentWidth, HorizontalGap, ReduntantBottomHeight, YOffset } from "@/common/constant";
 import { useUIStore } from "@/state/ui";
 
 export default function HomeScreen() {
@@ -57,37 +57,43 @@ export default function HomeScreen() {
           <Section
             title="新作"
             comics={comics.new}
+            totalWidth={ContentWidth}
             headerAction={() => router.navigate("./home/new")}
           />
           <Section
             title="更新"
             comics={comics.update}
+            totalWidth={ContentWidth}
             headerAction={() => router.push("./home/update")}
           />
           <Section
             title="最多阅读"
             comics={comics.mostView}
+            totalWidth={ContentWidth}
             headerAction={() => router.push("./home/most-view")}
           />
           <Section
             title="最多收藏"
             comics={comics.mostFollow}
+            totalWidth={ContentWidth}
             headerAction={() => router.push("./home/most-follow")}
           />
           <Section
             title="最多阅读（完结）"
             comics={comics.mostViewOver}
+            totalWidth={ContentWidth}
             headerAction={() => router.push("./home/most-view-over")}
           />
           <Section
             title="推荐"
             comics={comics.recommend}
+            totalWidth={ContentWidth}
             headerAction={() => router.push("./home/recommend")}
           />
 
-          <Section title="最多搜索" comics={comics.mostSearch} />
+          <Section title="最多搜索" comics={comics.mostSearch} totalWidth={ContentWidth} />
 
-          <GuessLike />
+          <GuessLike totalWidth={ContentWidth} />
         </ScrollView>
       )}
     </>

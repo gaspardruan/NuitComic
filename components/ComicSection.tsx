@@ -2,8 +2,8 @@ import { Comic } from "@/common/interface";
 import { IconSymbol, IconSymbolName } from "@/components/icon/IconSymbol";
 import { StyleProp, View, ViewStyle, StyleSheet, TouchableOpacity } from "react-native";
 import ThemedText from "@/components/ThemedText";
-import { SimpleGrid } from "react-native-super-grid";
 import { ComicCover } from "@/components/home/ComicCover";
+import { SimpleGrid } from "./shelf/SimpleGrid";
 
 type HomeSectionProps = {
   title: string;
@@ -11,6 +11,7 @@ type HomeSectionProps = {
   icon?: IconSymbolName;
   headerAction?: () => void;
   style?: StyleProp<ViewStyle>;
+  totalWidth: number;
 };
 
 const space = 12;
@@ -20,6 +21,7 @@ export function Section({
   comics,
   icon = "chevron.right",
   style,
+  totalWidth,
   headerAction,
 }: HomeSectionProps) {
   return (
@@ -37,15 +39,12 @@ export function Section({
         <ThemedText type="subtitle">{title}</ThemedText>
       )}
       <SimpleGrid
-        listKey="new"
         data={comics}
-        spacing={space}
-        style={styles.simpleGrid}
-        itemDimension={0}
-        maxItemsPerRow={3}
-        renderItem={({ item }) => {
-          return ComicCover({ comic: item });
-        }}
+        totalWidth={totalWidth}
+        verticalGap={space}
+        horizontalGap={space}
+        scrollEnabled={false}
+        renderItem={(item) => <ComicCover comic={item} />}
       />
     </View>
   );
