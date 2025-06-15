@@ -24,6 +24,7 @@ import { useScrollOffset } from "@/hooks/useScrollOffset";
 import { BottomBar } from "@/components/comic/bottom-bar/BottomBar";
 import ReadButton from "@/components/comic/bottom-bar/ReadButton";
 import {
+  ContentWidth,
   HorizontalGap,
   ReduntantBottomHeight,
   SectionGap,
@@ -119,7 +120,7 @@ export default function ComicDetail() {
         </View>
 
         {/* More */}
-        <GuessLike style={styles.guessLike} useSecondaryBackground />
+        <GuessLike totalWidth={ContentWidth} style={styles.guessLike} useSecondaryBackground />
       </ScrollView>
       <BottomBar>
         <View style={styles.buttonGroup}>

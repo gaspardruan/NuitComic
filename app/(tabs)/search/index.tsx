@@ -1,19 +1,21 @@
-import { ContentWidth } from "@/common/constant";
+import { ContentWidth, HorizontalGap, ReduntantBottomHeight } from "@/common/constant";
 import GuessLike from "@/components/GuessLike";
-// import { useHeaderHeight } from "@react-navigation/elements";
+import RandomLike from "@/components/RandomLike";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { Stack } from "expo-router";
-import { View } from "react-native";
+import { StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function SearchScreen() {
-  // const headerHeight = useHeaderHeight();
-  // console.log(headerHeight);
+  const headerHeight = useHeaderHeight();
+
   return (
     <>
       <Stack.Screen
         options={{
           title: "搜索",
-          // headerTransparent: true,
-          // headerBlurEffect: "systemChromeMaterial",
+          headerTransparent: true,
+          headerBlurEffect: "systemChromeMaterial",
           // headerShadowVisible: false,
           headerSearchBarOptions: {
             placeholder: "搜索漫画",
@@ -24,9 +26,23 @@ export default function SearchScreen() {
           },
         }}
       />
-      <View>
+
+      <ScrollView
+        contentContainerStyle={styles.contentContainer}
+        style={{ marginTop: headerHeight, overflow: "visible" }}
+      >
+        <RandomLike totalWidth={ContentWidth} />
         <GuessLike totalWidth={ContentWidth} />
-      </View>
+      </ScrollView>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    gap: 32,
+    paddingBottom: ReduntantBottomHeight,
+    paddingHorizontal: HorizontalGap,
+    paddingTop: HorizontalGap,
+  },
+});

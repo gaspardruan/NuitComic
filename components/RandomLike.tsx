@@ -1,4 +1,4 @@
-import { getGuessLikeComic } from "@/axios/comic";
+import { getRandomLikeComic } from "@/axios/comic";
 import { Section } from "./ComicSection";
 import { memo, useEffect, useState } from "react";
 import { Comic } from "@/common/interface";
@@ -9,14 +9,13 @@ type GuessLikeProps = {
   useSecondaryBackground?: boolean;
   style?: StyleProp<ViewStyle>;
   totalWidth: number;
-  onLoaded?: () => void;
 };
 
-export const GuessLike = ({ style, useSecondaryBackground, totalWidth }: GuessLikeProps) => {
+export const RandomLike = ({ style, useSecondaryBackground, totalWidth }: GuessLikeProps) => {
   const [guess, setGuess] = useState<Comic[]>([]);
   const [loading, setLoading] = useState(true);
-  const guessLike = () => {
-    getGuessLikeComic().then((res) => {
+  const randomLike = () => {
+    getRandomLikeComic().then((res) => {
       setGuess(res);
     });
   };
@@ -25,20 +24,20 @@ export const GuessLike = ({ style, useSecondaryBackground, totalWidth }: GuessLi
   const bg = useSecondaryBackground ? tagBackgroundColor : undefined;
 
   useEffect(() => {
-    guessLike();
+    randomLike();
     setLoading(false);
   }, []);
 
   return (
     <Section
-      title="猜你喜欢"
+      title="大家都在看"
       comics={guess}
       icon="arrow.trianglehead.2.clockwise"
-      headerAction={guessLike}
+      headerAction={randomLike}
       totalWidth={totalWidth}
       style={[{ backgroundColor: bg, opacity: loading ? 0 : 1 }, style]}
     />
   );
 };
 
-export default memo(GuessLike);
+export default memo(RandomLike);

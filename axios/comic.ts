@@ -105,6 +105,8 @@ export const getRandomComic = async () =>
 
 export const getGuessLikeComic = async () => await _post("/getcnxh.html", { type: 1, limit: 6 });
 
+export const getRandomLikeComic = async () => await _post("/getjphc.html", { fz: 1, limit: 6 });
+
 export const getUpdatedComicByPage = async (page = 1) => await _get(`/cate/tp/1-0-0-1-${page}`);
 
 export const getRecommendComicByPage = async (page = 1) =>

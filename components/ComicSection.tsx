@@ -23,6 +23,10 @@ export function Section({
   totalWidth,
   headerAction,
 }: HomeSectionProps) {
+  if (!comics || comics.length === 0) {
+    return null;
+  }
+
   return (
     <View style={[styles.sectionContainer, style]}>
       {headerAction ? (

@@ -15,7 +15,7 @@ type ComicListProps = {
   loadNextPage: () => void;
 };
 
-export function ComicList({ title, comics, loadNextPage }: ComicListProps) {
+export function ComicListScreen({ title, comics, loadNextPage }: ComicListProps) {
   const backgroundColor = useThemeColor("background");
   const text = useThemeColor("text");
 
