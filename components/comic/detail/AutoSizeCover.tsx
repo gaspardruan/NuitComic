@@ -12,7 +12,6 @@ const AutoSizedCover = ({ uri, fallbackUri, style, ...rest }: AutoSizedImageProp
   const onError = () => {
     if (!isError) {
       setIsError(true);
-      console.warn("Image loading failed, using fallback image.");
     }
   };
 
@@ -38,10 +37,6 @@ const AutoSizedCover = ({ uri, fallbackUri, style, ...rest }: AutoSizedImageProp
     borderRadius = isWidthLarger ? 6 : 12;
     w = isWidthLarger ? "100%" : "39%";
   }
-
-  console.log(fallbackUri);
-  console.log(uri);
-  console.log(isError);
 
   return (
     <Image

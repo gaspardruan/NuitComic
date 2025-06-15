@@ -233,15 +233,7 @@ const refineChapter = (chapters: any) => {
     chapters.forEach((chapter) => {
       chapter.title = (chapter.title as string).trim();
       chapter.createTime = formatTimeToDate(chapter.create_time as string);
-      let imageList = chapter.imagelist as string;
-      // 处理图片列表，去除首尾逗号
-      if (imageList.startsWith(",")) {
-        imageList = imageList.slice(1);
-      }
-      if (imageList.endsWith(",")) {
-        imageList = imageList.slice(0, -1);
-      }
-      chapter.imageList = imageList.split(",");
+      chapter.imageList = (chapter.imagelist as string).split(",").filter((url) => url.length > 0);
       // delete chapter.create_time;
       // delete chapter.imagelist;
     });
